@@ -1,2 +1,2 @@
 # exercise1
-a program for training github
+a program for training github hello
