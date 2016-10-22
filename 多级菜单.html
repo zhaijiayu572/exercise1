@@ -27,16 +27,18 @@
             display: block;
             text-align: center;
             line-height: 30px;
+            /*border-bottom: 1px dashed;*/
         }
         .sub-menu ul {
             background-color: aqua;
+            display: none;
         }
         .sub-menu ul li{
             border-bottom: 1px dashed #000;
         }
         #main-menu .sub-menu ul a{
             text-align: left;
-            text-indent: 5px;
+            text-indent: 15px;
         }
     </style>
 </head>
@@ -67,5 +69,23 @@
         </ul>
     </li>
 </ul>
+<script>
+    var oul=document.getElementById("main-menu");
+    var oli=oul.getElementsByTagName("li");
+    for(var i=0;i<oli.length;i++)
+    {
+        if(oli[i].className="sub-menu")
+        {
+            oli[i].onmouseover=function () {
+                var oul2=this.getElementsByTagName("ul")[0];
+                oul2.style.display="block";
+            };
+            oli[i].onmouseout=function () {
+                var oul2=this.getElementsByTagName("ul")[0];
+                oul2.style.display="none"
+            };
+        }
+    }
+</script>
 </body>
 </html>
