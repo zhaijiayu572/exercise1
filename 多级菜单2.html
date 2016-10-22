@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ol,ul{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #main li{
+            width: 100px;
+            background-color: antiquewhite;
+
+        }
+        #main li a{
+            /*width: 100%;*/
+            /*height: 100%;*/
+            display: block;
+            line-height: 30px;
+            text-align: center;
+            cursor: default;
+        }
+        #main ul{
+
+            display: none;
+        }
+        #main ul li{
+            height: 30px;
+            width: 100px;
+            border-bottom: 1px dashed;
+            text-align: center;
+            line-height: 30px;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+<ul id="main">
+    <li class="main-menu">
+        <a href="#">Link1</a>
+        <ul>
+            <li>sublink1</li>
+            <li>sublink2</li>
+            <li>sublink3</li>
+        </ul>
+    </li>
+    <li class="main-menu">
+        <a href="#">Link2</a>
+        <ul>
+            <li>sublink1</li>
+            <li>sublink2</li>
+            <li>sublink3</li>
+        </ul>
+    </li>
+</ul>
+<script>
+    var oul=document.getElementById("main");
+    var oli=document.getElementsByTagName("li");
+    for(var i=0;i<oli.length;i++)
+    {
+        if(oli[i].className="main-menu")
+        {
+            oli[i].onclick=function () {
+                var ul2=this.getElementsByTagName("ul")[0];
+
+                if(ul2.style.display=="none")
+                {
+                    ul2.style.display="block";
+                    console.log(ul2.style.display);
+                }
+                else {
+                    ul2.style.display="none";
+
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
