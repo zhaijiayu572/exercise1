@@ -50,7 +50,7 @@
 <body>
 <ul id="main">
     <li class="main-menu">
-        <h3>Link1</h3>
+        <h3 >Link1</h3>
         <ul class="sub-menu">
             <li>sublink1</li>
             <li>sublink2</li>
@@ -72,15 +72,20 @@
     var oUl2 = oUl.getElementsByTagName("ul");
     for (var i = 0; i < aH3.length; i++) {
         aH3[i].index = i;
+        aH3[i].bFlag = false;  //false 代表隐藏  true 代表显示
         aH3[i].onclick = function () {
-            if(oUl2[this.index].style.display == "block")
+            var oSubmenu = oUl2[this.index];
+            if(this.bFlag)
             {
-                oUl2[this.index].style.display = "none";
+                oSubmenu.style.display = "none";
             }
             else{
-                oUl2[this.index].style.display = "block";
+                oSubmenu.style.display = "block";
             }
-
+            this.bFlag =!this.bFlag;
+        };
+        aH3[i].onselectstart =function () {
+            return false;
         }
     }
 
