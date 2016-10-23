@@ -1,2 +1,2 @@
 # exercise1
-a program for training github hello
+练习基础的HTML，CSS，JS
