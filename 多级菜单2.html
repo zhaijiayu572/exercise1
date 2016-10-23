@@ -61,24 +61,22 @@
     </li>
 </ul>
 <script>
-    var oul=document.getElementById("main");
-    var oli=document.getElementsByTagName("li");
-    for(var i=0;i<oli.length;i++)
+    var oUl=document.getElementById("main");
+    var aLi=oUl.getElementsByTagName("li");
+    for(var i=0;i<aLi.length;i++)
     {
-        if(oli[i].className="main-menu")
+        if(aLi[i].className="main-menu")
         {
-            oli[i].onclick=function () {
-                var ul2=this.getElementsByTagName("ul")[0];
-                ul2.nex
-
-                if(ul2.style.display=="none")
+            aLi[i].onclick=function () {
+                var oUl2=this.getElementsByTagName("ul")[0];
+                if(oUl2.style.display=="block")
                 {
-                    ul2.style.display="block";
-                    console.log(ul2.style.display);
+                    oUl2.style.display="none";
+                    console.log(oUl2.style.display);
                 }
                 else {
-                    ul2.style.display="none";
-
+                    oUl2.style.display="block";
+                    console.log(oUl2.style.display);
                 }
             }
         }
