@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>从父级查找</title>
     <style>
         *{
             margin: 0;
@@ -44,16 +44,16 @@
 <body>
 <ul id="main">
     <li class="main-menu">
-        <a href="#">Link1</a>
-        <ul>
+        <h3>Link1</h3>
+        <ul class="sub-menu">
             <li>sublink1</li>
             <li>sublink2</li>
             <li>sublink3</li>
         </ul>
     </li>
     <li class="main-menu">
-        <a href="#">Link2</a>
-        <ul>
+        <h3>Link2</h3>
+        <ul class="sub-menu">
             <li>sublink1</li>
             <li>sublink2</li>
             <li>sublink3</li>
@@ -61,28 +61,16 @@
     </li>
 </ul>
 <script>
-    var oul=document.getElementById("main");
-    var oli=document.getElementsByTagName("li");
-    for(var i=0;i<oli.length;i++)
+    var oUl=document.getElementById("main");
+    var aH3=oUl.getElementsByTagName("h3");
+
+    for(var i=0;i<aH3.length;i++)
     {
-        if(oli[i].className="main-menu")
-        {
-            oli[i].onclick=function () {
-                var ul2=this.getElementsByTagName("ul")[0];
-                ul2.nex
-
-                if(ul2.style.display=="none")
-                {
-                    ul2.style.display="block";
-                    console.log(ul2.style.display);
-                }
-                else {
-                    ul2.style.display="none";
-
-                }
-            }
+        aH3[i].onclick = function () {
+            this.parentNode.children[1].style.display = "block";
         }
     }
+
 </script>
 </body>
 </html>

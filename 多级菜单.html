@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <title>多级菜单</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        ol,ul{
+
+        ol, ul {
             list-style: none;
         }
-        a{
+
+        a {
             text-decoration: none;
         }
-        #main-menu .sub-menu{
+
+        #main-menu .sub-menu {
             float: left;
             width: 100px;
             height: 30px;
             background-color: antiquewhite;
-            margin-right: 5px ;
+            margin-right: 5px;
         }
-        .sub-menu a{
+
+        .sub-menu a {
             width: 100%;
             height: 100%;
             display: block;
@@ -29,14 +33,17 @@
             line-height: 30px;
             /*border-bottom: 1px dashed;*/
         }
+
         .sub-menu ul {
             background-color: aqua;
             display: none;
         }
-        .sub-menu ul li{
+
+        .sub-menu ul li {
             border-bottom: 1px dashed #000;
         }
-        #main-menu .sub-menu ul a{
+
+        #main-menu .sub-menu ul a {
             text-align: left;
             text-indent: 15px;
         }
@@ -54,7 +61,7 @@
     </li>
     <li class="sub-menu">
         <a href="#">link2</a>
-        <ul >
+        <ul>
             <li><a href="#">sublink</a></li>
             <li><a href="#">sublink</a></li>
             <li><a href="#">sublink</a></li>
@@ -62,7 +69,7 @@
     </li>
     <li class="sub-menu">
         <a href="#">link3</a>
-        <ul >
+        <ul>
             <li><a href="#">sublink</a></li>
             <li><a href="#">sublink</a></li>
             <li><a href="#">sublink</a></li>
@@ -70,21 +77,20 @@
     </li>
 </ul>
 <script>
-    var oul=document.getElementById("main-menu");
-    var oli=oul.getElementsByTagName("li");
-    for(var i=0;i<oli.length;i++)
-    {
-        if(oli[i].className="sub-menu")
-        {
-            oli[i].onmouseover=function () {
-                var oul2=this.getElementsByTagName("ul")[0];
-                oul2.style.display="block";
-            };
-            oli[i].onmouseout=function () {
-                var oul2=this.getElementsByTagName("ul")[0];
-                oul2.style.display="none"
-            };
-        }
+    var oUl = document.getElementById("main-menu");
+    var aLi = oUl.children;
+    console.log(aLi);
+    for (var i = 0; i < aLi.length; i++) {
+
+        aLi[i].onmouseover = function () {
+            var oUl2 = this.children[1];
+            oUl2.style.display = "block";
+        };
+        aLi[i].onmouseout = function () {
+            var oUl2 = this.children[1];
+            oUl2.style.display = "none"
+        };
+
     }
 </script>
 </body>

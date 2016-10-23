@@ -2,24 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>从父级查找</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        ol,ul{
+
+        ol, ul {
             list-style: none;
         }
-        a{
+
+        a {
             text-decoration: none;
         }
-        #main li{
+
+        #main li {
             width: 100px;
             background-color: antiquewhite;
 
         }
-        #main li a{
+
+        #main li a {
             /*width: 100%;*/
             /*height: 100%;*/
             display: block;
@@ -27,11 +31,13 @@
             text-align: center;
             cursor: default;
         }
-        #main ul{
+
+        #main ul {
 
             display: none;
         }
-        #main ul li{
+
+        #main ul li {
             height: 30px;
             width: 100px;
             border-bottom: 1px dashed;
@@ -44,16 +50,16 @@
 <body>
 <ul id="main">
     <li class="main-menu">
-        <a href="#">Link1</a>
-        <ul>
+        <h3>Link1</h3>
+        <ul class="sub-menu">
             <li>sublink1</li>
             <li>sublink2</li>
             <li>sublink3</li>
         </ul>
     </li>
     <li class="main-menu">
-        <a href="#">Link2</a>
-        <ul>
+        <h3>Link2</h3>
+        <ul class="sub-menu">
             <li>sublink1</li>
             <li>sublink2</li>
             <li>sublink3</li>
@@ -61,28 +67,19 @@
     </li>
 </ul>
 <script>
-    var oul=document.getElementById("main");
-    var oli=document.getElementsByTagName("li");
-    for(var i=0;i<oli.length;i++)
-    {
-        if(oli[i].className="main-menu")
-        {
-            oli[i].onclick=function () {
-                var ul2=this.getElementsByTagName("ul")[0];
-                ul2.nex
+    var oUl = document.getElementById("main");
+    var aH3 = oUl.getElementsByTagName("h3");
+    var oUl2 = oUl.getElementsByTagName("ul");
 
-                if(ul2.style.display=="none")
-                {
-                    ul2.style.display="block";
-                    console.log(ul2.style.display);
-                }
-                else {
-                    ul2.style.display="none";
 
-                }
-            }
+    for (var i = 0; i < aH3.length; i++) {
+        aH3[i].index = i;
+
+        aH3[i].onclick = function () {
+            oUl2[this.index].style.display = "block";
         }
     }
+
 </script>
 </body>
 </html>
