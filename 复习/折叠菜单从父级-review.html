@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>折叠菜单从父级-review</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ol,ul{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        .main-menu{
+            width: 100px;
+            background-color: #999999;
+            border-top: 1px solid;
+        }
+        .sub-menu{
+            display: none;
+        }
+        .sub-menu li{
+            height: 30px;
+            width: 100px;
+            background-color: #cccccc;
+            border-top: 1px solid;
+
+        }
+    </style>
+</head>
+<body>
+<ul id="main">
+    <li class="main-menu">
+        <h3 >Link1</h3>
+        <ul class="sub-menu">
+            <li>sublink1</li>
+            <li>sublink2</li>
+            <li>sublink3</li>
+        </ul>
+    </li>
+    <li class="main-menu">
+        <h3>Link2</h3>
+        <ul class="sub-menu">
+            <li>sublink1</li>
+            <li>sublink2</li>
+            <li>sublink3</li>
+        </ul>
+    </li>
+</ul>
+<script>
+    var oUl = document.getElementById("main");
+    var aH3 = oUl.getElementsByTagName("h3");
+
+    for(var i=0;i<aH3.length;i++)
+    {
+        aH3[i].bFlag = false;    //false 代表隐藏 true代表显示
+        aH3[i].onclick = function () {
+            console.log(this.parentNode.children[1]);
+            if(!this.bFlag)
+            {
+                this.parentNode.children[1].style.display = "block";
+            }
+            else{
+                this.parentNode.children[1].style.display = "none";
+            }
+            this.bFlag = !this.bFlag;
+        }
+        aH3[i].onselectstart = function () {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

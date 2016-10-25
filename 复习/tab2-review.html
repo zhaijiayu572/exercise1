@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tab2-review</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #container{
+            margin: 100px auto;
+            width: 400px;
+            height: 300px;
+        }
+        #tab{
+            overflow: hidden;
+        }
+        #tab li{
+            width:100px;
+            height: 30px;
+            margin-right: 5px;
+            background-color: #cccccc;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+        #tab .selected{
+            background-color: #000000;
+            color: #ffffff;
+        }
+        #content div{
+            height: 270px;
+            width: 400px;
+            background-color: #cccccc;
+            border-top: 1px solid;
+            display: none;
+        }
+        #content .selected{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <ul id="tab">
+        <li class="selected">html</li>
+        <li>css</li>
+        <li>js</li>
+    </ul>
+    <div id="content">
+        <div class="selected">111</div>
+        <div >222</div>
+        <div >333</div>
+    </div>
+</div>
+<script>
+    var oUl = document.getElementById("tab");
+    var aLi =  oUl.getElementsByTagName("li");
+    var oDiv = document.getElementById("content");
+    var aDiv = oDiv.getElementsByTagName("div");
+    for(var i=0;i<aLi.length;i++)
+    {
+        aLi[i].index = i;
+        aLi[i].onclick = function () {
+            for(var j=0;j<aLi.length;j++)
+            {
+                aLi[j].className = "";
+                aDiv[j].className = "";
+            }
+            this.className = "selected";
+            aDiv[this.index].className = "selected";
+        }
+
+    }
+</script>
+
+</body>
+</html>
