@@ -84,6 +84,7 @@
     </div>
 </div>
 <script>
+    var oContainer = document.getElementById("container");
     var oUl = document.getElementById("tab");
     var aLi = oUl.getElementsByTagName("li");
     var oCon = document.getElementById("content");
@@ -107,13 +108,15 @@
         aLi[i].index = i;
         aLi[i].onmouseover = function () {
             change(this.index);
+            iNow = this.index;
         }
+
     }
     oNext.onclick = function () {
         iNow++;
         iNow = iNow%aImg.length;
         change(iNow);
-    }
+    };
     oLast.onclick = function () {
         iNow--;
         if(iNow<0)
@@ -121,7 +124,19 @@
             iNow=aImg.length-1;
         }
         change(iNow);
+    };
+    var timer = setInterval(function () {
+        oNext.onclick();
+    },1000);
+    oContainer.onmouseover = function () {
+        clearInterval(timer);
+    };
+    oContainer.onmouseout = function () {
+        timer = setInterval(function () {
+            oNext.onclick();
+        },1000);
     }
+
 
 </script>
 </body>
