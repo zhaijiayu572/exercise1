@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #container{
+            width: 680px;
+            height: 344px;
+            margin: 50px auto;
+            position: relative;
+        }
+        #tab{
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+        #tab li{
+            width: 20px;
+            height: 20px;
+            float: left;
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 20px;
+            text-align: center;
+            margin-right: 5px;
+            cursor: pointer;
+
+        }
+        #tab .selected{
+            background-color: orange;
+        }
+        #content img{
+            display: none;
+        }
+        #content .selected{
+            display: block;
+        }
+        #arrow{
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+        }
+        #arrow span{
+            height: 20px;
+            width: 20px;
+            background-color: black;
+            color: white;
+            float: left;
+            text-align: center;
+            line-height: 20px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <img class="selected" src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+    </div>
+    <ul id="tab">
+        <li class="selected">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <div id="arrow">
+        <span id="last">&lt;</span>
+        <span id="next">&gt;</span>
+    </div>
+</div>
+<script>
+    var oUl = document.getElementById("tab");
+    var aLi = oUl.getElementsByTagName("li");
+    var oCon = document.getElementById("content");
+    var aImg = oCon.getElementsByTagName("img");
+    var oArrow = document.getElementById("arrow");
+    var aSpan = oArrow.getElementsByTagName("span");
+    var oLast = document.getElementById("last");
+    var oNext = document.getElementById("next");
+    var iNow = 0;
+    function change(index) {
+        for(var j=0;j<aImg.length;j++)
+        {
+            aLi[j].className = "";
+            aImg[j].className = "";
+        }
+        aLi[index].className = "selected";
+        aImg[index].className = "selected";
+    }
+    for(var i=0;i<aLi.length;i++)
+    {
+        aLi[i].index = i;
+        aLi[i].onmouseover = function () {
+            change(this.index);
+        }
+    }
+    oNext.onclick = function () {
+        iNow++;
+        iNow = iNow%aImg.length;
+        change(iNow);
+    }
+    oLast.onclick = function () {
+        iNow--;
+        if(iNow<0)
+        {
+            iNow=aImg.length-1;
+        }
+        change(iNow);
+    }
+
+</script>
+</body>
+</html>
