@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scrollbar</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #container{
+            float: left;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        #content{
+            width: 200px;
+            background-color: #cccccc;
+            float: left;
+            position: relative;
+        }
+        #scroll-bar{
+            width: 20px;
+            height: 200px;
+            background-color: #999999;
+            float: left;
+        }
+        #block{
+            height: 20px;
+            background-color: red;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+    </div>
+    <div id="scroll-bar">
+        <div id="block"></div>
+    </div>
+</div>
+<script>
+    (function () {
+        var oContainer = document.getElementById("container");
+        var oContent = document.getElementById("content");
+        var oBlock = document.getElementById("block");
+        var oScroll = document.getElementById("scroll-bar");
+        console.log(oContent.offsetHeight);
+        oBlock.onmousedown = function (e) {
+            e = e|| window.event;
+            var iDisY = e.clientY - this.offsetTop;
+            document.onmousemove = function (e) {
+                e = e || window.event;
+                var top = e.clientY - iDisY;
+                var iCmax = oContent.offsetHeight-oContainer.offsetHeight;
+                console.log(iCmax);
+                var iMax = oScroll.offsetHeight - oBlock.offsetHeight;
+                var rate = (oContent.offsetHeight-oContainer.offsetHeight)/iMax;
+                var iMin = 0;
+                oContent.style.top = -rate*top + 'px';
+                oBlock.style.top = top + 'px';
+
+                if(oBlock.offsetTop >= iMax){
+                    oBlock.style.top = iMax + 'px';
+                    oContent.style.top = -iCmax + 'px';
+
+                }
+                if(oBlock.offsetTop <= iMin){
+                    oBlock.style.top = iMin + 'px';
+                    oContent.style.top = iMin + 'px';
+                }
+
+
+                return false;
+
+
+            }
+        };
+        document.onmouseup = function () {
+            document.onmousemove = null;
+        }
+    })();
+</script>
+</body>
+</html>
