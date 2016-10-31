@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Magnifier</title>
+    <style>
+        *{
+            padding:0;
+            margin: 0;
+        }
+        #normal-image{
+            height: 200px;
+            width: 200px;
+            float: left;
+            background-image: url("img/small.jpg");
+            position: relative;
+            overflow: hidden;
+        }
+        #magnifier{
+            height: 100px;
+            width: 100px;
+            background-color: rgba(255,0,255,0.5);
+            position: absolute;
+            display: none;
+        }
+        #amplifying{
+            float: left;
+            height: 200px;
+            width: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        #bigger-image{
+            height: 400px;
+            width: 400px;
+            background-image: url("img/big.jpg");
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="normal-image">
+    <div id="magnifier"></div>
+</div>
+<div id="amplifying">
+    <div id="bigger-image"></div>
+</div>
+<script>
+    (function () {
+        var oNormal = document.getElementById("normal-image");
+        var oMagnifier = document.getElementById("magnifier");
+        var oBigger = document.getElementById("bigger-image");
+        var oAmplifying = document.getElementById("amplifying");
+        var fRateX = oBigger.offsetWidth/oNormal.offsetWidth;
+        var fRateY = oBigger.offsetHeight/oNormal.offsetHeight;
+        var iMaxX = oBigger.offsetWidth - oAmplifying.offsetWidth;
+        var iMaxY = oBigger.offsetHeight - oAmplifying.offsetHeight;
+        oNormal.onmouseover = function () {
+            oMagnifier.style.display = "block";
+            oAmplifying.style.display = "block";
+            oNormal.onmousemove = function (e) {
+                e = e || window.event;
+                var iDisX = e.clientX - oMagnifier.offsetWidth/2;
+                var iDisY = e.clientY - oMagnifier.offsetHeight/2;
+                var fImgX = -fRateX*iDisX;
+                var fImgY = -fRateY*iDisY;
+                if( fImgX > 0){
+                    fImgX = 0 ;
+                }
+                if( fImgY > 0){
+                    fImgY = 0 ;
+                }
+                if( fImgX < -iMaxX){
+                    fImgX = -iMaxX ;
+                }
+                if( fImgY < -iMaxY){
+                    fImgY = -iMaxY ;
+                }
+                oMagnifier.style.left = iDisX + 'px';
+                oMagnifier.style.top = iDisY + 'px';
+                oBigger.style.left = fImgX + 'px';
+                oBigger.style.top = fImgY + 'px';
+                console.log((oBigger.style.left));
+
+            }
+        };
+        oNormal.onmouseout = function () {
+            oNormal.onmousemove = null;
+            oMagnifier.style.display = "none";
+            oAmplifying.style.display = "none";
+        }
+    })();
+</script>
+</body>
+</html>
