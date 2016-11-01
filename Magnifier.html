@@ -31,6 +31,7 @@
             position: relative;
         }
         #bigger-image{
+            visibility: hidden;
             height: 400px;
             width: 400px;
             background-image: url("img/big.jpg");
@@ -55,9 +56,11 @@
         var fRateY = oBigger.offsetHeight/oNormal.offsetHeight;
         var iMaxX = oBigger.offsetWidth - oAmplifying.offsetWidth;
         var iMaxY = oBigger.offsetHeight - oAmplifying.offsetHeight;
+
         oNormal.onmouseover = function () {
             oMagnifier.style.display = "block";
-            oAmplifying.style.display = "block";
+            oBigger.style.visibility = "visible";
+            console.log(oBigger.style.display);
             oNormal.onmousemove = function (e) {
                 e = e || window.event;
                 var iDisX = e.clientX - oMagnifier.offsetWidth/2;
@@ -87,7 +90,7 @@
         oNormal.onmouseout = function () {
             oNormal.onmousemove = null;
             oMagnifier.style.display = "none";
-            oAmplifying.style.display = "none";
+            oBigger.style.visibility = "hidden";
         }
     })();
 </script>
