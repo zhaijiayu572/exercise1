@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图-淡入淡出效果</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #container{
+            width: 680px;
+            height: 344px;
+            margin: 50px auto;
+            position: relative;
+        }
+        #tab{
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            z-index: 9999;
+        }
+        #tab li{
+            width: 20px;
+            height: 20px;
+            float: left;
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 20px;
+            text-align: center;
+            margin-right: 5px;
+            cursor: pointer;
+
+        }
+        #tab .selected{
+            background-color: orange;
+        }
+        #content img{
+            position: absolute;
+            left: 0;
+            top:0;
+        }
+        #content .selected{
+            display: block;
+        }
+        #arrow{
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            z-index: 9999;
+        }
+        #arrow span{
+            height: 20px;
+            width: 20px;
+            background-color: black;
+            color: white;
+            float: left;
+            text-align: center;
+            line-height: 20px;
+            margin-right: 5px;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <img  src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+    </div>
+    <ul id="tab">
+        <li class="selected">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <div id="arrow">
+        <span id="last">&lt;</span>
+        <span id="next">&gt;</span>
+    </div>
+</div>
+<script src="jslib.js"></script>
+<script>
+    var oContainer = document.getElementById("container");
+    var oTab =document.getElementById("tab");
+    var aLi = oTab.getElementsByTagName("li");
+    var oContent =document.getElementById("content");
+    var aImg = oContent.getElementsByTagName("img");
+    var iNow = 0;
+    var iYard = aImg.length;
+    for(var i=0;i<aImg.length;i++){
+        aImg[i].style.zIndex = aImg.length - i;
+        aLi[i].index = i;
+        aLi[i].onmouseover =  function () {
+            for(var i=0;i<aImg.length;i++){
+                aLi[i].className = '';
+            }
+            this.className = "selected";
+            var oImg = aImg[this.index];
+            oImg.style.opacity = 0;
+            oImg.style.filter = "alpha(opacity=0)";
+            oImg.style.zIndex = ++iYard;
+            animate(oImg,{
+                opacity:100
+            });
+
+        }
+    }
+</script>
+</body>
+</html>
