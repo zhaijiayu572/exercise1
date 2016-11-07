@@ -90,31 +90,60 @@
 </div>
 <script src="jslib.js"></script>
 <script>
-    var oContainer = document.getElementById("container");
-    var oTab =document.getElementById("tab");
-    var aLi = oTab.getElementsByTagName("li");
-    var oContent =document.getElementById("content");
-    var aImg = oContent.getElementsByTagName("img");
-    var iNow = 0;
-    var iYard = aImg.length;
-    for(var i=0;i<aImg.length;i++){
-        aImg[i].style.zIndex = aImg.length - i;
-        aLi[i].index = i;
-        aLi[i].onmouseover =  function () {
+    (function () {
+        var oContainer = document.getElementById("container");
+        var oTab =document.getElementById("tab");
+        var aLi = oTab.getElementsByTagName("li");
+        var oContent =document.getElementById("content");
+        var aImg = oContent.getElementsByTagName("img");
+        var oLast = document.getElementById("last");
+        var oNext = document.getElementById("next");
+        var iNow = 0;
+        var iYard = aImg.length;
+        function change(index){
+            aImg[index].style.opacity = 0;
+            aImg[index].style.filter = "alpha(opacity=0)";
+            aImg[index].style.zIndex = ++iYard;
+            animate(aImg[index],{
+                opacity:100
+            });
             for(var i=0;i<aImg.length;i++){
                 aLi[i].className = '';
             }
-            this.className = "selected";
-            var oImg = aImg[this.index];
-            oImg.style.opacity = 0;
-            oImg.style.filter = "alpha(opacity=0)";
-            oImg.style.zIndex = ++iYard;
-            animate(oImg,{
-                opacity:100
-            });
-
+            aLi[index].className = "selected";
         }
-    }
+        for(var i=0;i<aImg.length;i++){
+            aImg[i].style.zIndex = aImg.length - i;
+            aLi[i].index = i;
+            aLi[i].onmouseover =  function () {
+                iNow = this.index;
+                change(iNow);
+            }
+        }
+        oNext.onclick = function () {
+            iNow++;
+            iNow = iNow%aLi.length;
+            change(iNow);
+        };
+        oLast.onclick = function () {
+            iNow--;
+            if(iNow<0){
+                iNow = aLi.length-1;
+            }
+            change(iNow);
+        };
+        var timer = setInterval(function () {
+            oNext.onclick();
+        },1000);
+        oContainer.onmouseover = function () {
+            clearInterval(timer);
+        };
+        oContainer.onmouseout = function () {
+            timer = setInterval(function () {
+                oNext.onclick();
+            },1000);
+        }
+    })();
 </script>
 </body>
 </html>
