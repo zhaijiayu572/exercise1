@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仿腾讯图片轮播图</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    ol,ul{
+        list-style: none;
+    }
+    #container{
+        height: 344px;
+        width: 680px;
+        position: relative;
+        margin: 0 auto;
+    }
+    #content{
+        height: 344px;
+        width: 680px;
+    }
+    #content img{
+        position: absolute;
+        left: 0;
+        top:0;
+    }
+    #control-panel{
+        position: absolute;
+        right: 10px;
+        bottom:10px;
+        z-index: 9999;
+    }
+    #prev,#next{
+        float: left;
+        height: 34px;
+        background-color: magenta;
+
+    }
+    #list-container{
+        float: left;
+        height: 34px;
+        width: 136px;
+        overflow: hidden;
+        position: relative;
+    }
+    #list{
+        float: left;
+        position: absolute;
+        left: 0;
+        top:0;
+    }
+    #list li{
+        float: left;
+        height: 34px;
+        width: 68px;
+    }
+    #list .selected{
+        height: 39px;
+    }
+</style>
+<body>
+<div id="container">
+    <div id="content">
+        <img src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+    </div>
+    <div id="control-panel">
+        <div id="prev">&lt;</div>
+        <div id="list-container">
+            <ul id="list">
+                <li class="selected"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+
+        <div id="next">&gt;</div>
+    </div>
+</div>
+<script src="jslib.js"></script>
+<script>
+    (function () {
+        var oContainer = document.getElementById("container");
+        var oContent = document.getElementById("content");
+        var aImg = oContent.getElementsByTagName("img");
+        var oList = document.getElementById("list");
+        var aLi = oList.getElementsByTagName("li");
+        var oPrev = document.getElementById("prev");
+        var oNext = document.getElementById("next");
+        var iDev = aLi[0].offsetWidth;
+        var iMax = iDev*2;
+        var iZindex = aImg.length;
+        var iNow = 0;
+        for(var j=0;j<aLi.length;j++){
+            aLi[j].style.backgroundImage = "url('img/small"+(j+1)+".jpg')";
+        }
+        function changImg(index) {
+            for(var i=0;i<aLi.length;i++){
+                aLi[i].className = "";
+            }
+            aLi[index].className = 'selected';
+            var oImg = aImg[index];
+            oImg.style.opacity = 0;
+            oImg.style.filter = 'alpha(opacity=0)';
+            oImg.style.zIndex = ++iZindex;
+            animate(oImg,{opacity:100})
+        }
+        for(var i=0;i<aImg.length;i++){
+            aImg[i].style.zIndex = aImg.length-i;
+            aLi[i].index = i;
+            aLi[i].onmouseover = function () {
+                changImg(this.index);
+                iNow = this.index;
+            }
+        }
+        oPrev.onclick = function () {
+            iNow--;
+            if(iNow<0){
+                iNow = aImg.left-1;
+            }
+            changImg(iNow);
+        };
+        function which(left) {
+            if(left == 0){
+                return 0;
+            }
+            if(left == -iDev){
+                return 1;
+            }
+            if(left == -iDev*2){
+                return 2;
+            }
+            if(left == -iDev*3){
+                return 3;
+            }
+        }
+        oNext.onclick = function () {
+            var iLeft = oList.offsetLeft - iDev;
+            if(iLeft < -iMax){
+                iLeft = 0;
+            }
+            iNow = which(iLeft);
+            animate(oList,{left:iLeft});
+            changImg(iNow);
+        };
+        oPrev.onclick = function () {
+            var iLeft = oList.offsetLeft + iDev;
+            if(iLeft > 0){
+                iLeft = -iDev*(aLi.length-2);
+            }
+            iNow = which(iLeft);
+            animate(oList,{left:iLeft});
+            changImg(iNow);
+        };
+        var timer =setInterval(function () {
+            oNext.onclick();
+        },3000);
+        oContainer.onmouseover = function () {
+            clearInterval(timer);
+        };
+        oContainer.onmouseout = function () {
+            timer =setInterval(function () {
+                oNext.onclick();
+            },3000);
+        }
+    })();
+</script>
+</body>
+</html>
