@@ -5,60 +5,74 @@
     <title>仿腾讯图片轮播图</title>
 </head>
 <style>
-    *{
+    * {
         margin: 0;
         padding: 0;
     }
-    ol,ul{
+
+    ol, ul {
         list-style: none;
     }
-    #container{
+
+    #container {
         height: 344px;
         width: 680px;
         position: relative;
         margin: 0 auto;
     }
-    #content{
+
+    #content {
         height: 344px;
         width: 680px;
     }
-    #content img{
+
+    #content img {
         position: absolute;
         left: 0;
-        top:0;
+        top: 0;
     }
-    #control-panel{
+
+    #control-panel {
         position: absolute;
         right: 10px;
-        bottom:10px;
+        bottom: 10px;
         z-index: 9999;
     }
-    #prev,#next{
-        float: left;
-        height: 34px;
-        background-color: magenta;
 
-    }
-    #list-container{
+    #prev, #next {
         float: left;
         height: 34px;
+        margin-top: 5px;
+        line-height:34px;
+        font-size: 30px;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+    #list-container {
+        float: left;
+        height: 39px;
         width: 136px;
         overflow: hidden;
         position: relative;
     }
-    #list{
-        float: left;
+
+    #list {
+        width:280px;
+        /*float: left;*/
         position: absolute;
         left: 0;
-        top:0;
+        top: 0;
     }
-    #list li{
+
+    #list li {
         float: left;
         height: 34px;
         width: 68px;
     }
-    #list .selected{
-        height: 39px;
+
+    #list .selected {
+        margin-top: 5px;
     }
 </style>
 <body>
@@ -94,14 +108,14 @@
         var oPrev = document.getElementById("prev");
         var oNext = document.getElementById("next");
         var iDev = aLi[0].offsetWidth;
-        var iMax = iDev*2;
+        var iMax = iDev * 2;
         var iZindex = aImg.length;
         var iNow = 0;
-        for(var j=0;j<aLi.length;j++){
-            aLi[j].style.backgroundImage = "url('img/small"+(j+1)+".jpg')";
+        for (var j = 0; j < aLi.length; j++) {
+            aLi[j].style.backgroundImage = "url('img/small" + (j + 1) + ".jpg')";
         }
         function changImg(index) {
-            for(var i=0;i<aLi.length;i++){
+            for (var i = 0; i < aLi.length; i++) {
                 aLi[i].className = "";
             }
             aLi[index].className = 'selected';
@@ -109,10 +123,11 @@
             oImg.style.opacity = 0;
             oImg.style.filter = 'alpha(opacity=0)';
             oImg.style.zIndex = ++iZindex;
-            animate(oImg,{opacity:100})
+            animate(oImg, {opacity: 100})
         }
-        for(var i=0;i<aImg.length;i++){
-            aImg[i].style.zIndex = aImg.length-i;
+
+        for (var i = 0; i < aImg.length; i++) {
+            aImg[i].style.zIndex = aImg.length - i;
             aLi[i].index = i;
             aLi[i].onmouseover = function () {
                 changImg(this.index);
@@ -121,53 +136,55 @@
         }
         oPrev.onclick = function () {
             iNow--;
-            if(iNow<0){
-                iNow = aImg.left-1;
+            if (iNow < 0) {
+                iNow = aImg.left - 1;
             }
             changImg(iNow);
         };
         function which(left) {
-            if(left == 0){
+            if (left <= 0 && left > -iDev) {
                 return 0;
             }
-            if(left == -iDev){
+            if (left <= -iDev && left > -iDev*2) {
                 return 1;
             }
-            if(left == -iDev*2){
+            if (left <= -iDev * 2 && left > -iDev*3) {
                 return 2;
             }
-            if(left == -iDev*3){
+            if (left <= -iDev * 3) {
                 return 3;
             }
         }
+
         oNext.onclick = function () {
             var iLeft = oList.offsetLeft - iDev;
-            if(iLeft < -iMax){
+            if (iLeft < -iMax) {
                 iLeft = 0;
             }
             iNow = which(iLeft);
-            animate(oList,{left:iLeft});
+            animate(oList, {left: iLeft});
+            console.log(iNow);
             changImg(iNow);
         };
         oPrev.onclick = function () {
             var iLeft = oList.offsetLeft + iDev;
-            if(iLeft > 0){
-                iLeft = -iDev*(aLi.length-2);
+            if (iLeft > 0) {
+                iLeft = -iDev * (aLi.length - 2);
             }
             iNow = which(iLeft);
-            animate(oList,{left:iLeft});
+            animate(oList, {left: iLeft});
             changImg(iNow);
         };
-        var timer =setInterval(function () {
+        var timer = setInterval(function () {
             oNext.onclick();
-        },3000);
+        }, 3000);
         oContainer.onmouseover = function () {
             clearInterval(timer);
         };
         oContainer.onmouseout = function () {
-            timer =setInterval(function () {
+            timer = setInterval(function () {
                 oNext.onclick();
-            },3000);
+            }, 3000);
         }
     })();
 </script>
