@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <title>$Title$</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        ol,ul{
+
+        ol, ul {
             list-style: none;
         }
-        a{
+
+        a {
             text-decoration: none;
         }
-        #main li{
+
+        #main li {
             width: 100px;
             background-color: antiquewhite;
 
         }
-        #main li a{
+
+        #main li a {
             /*width: 100%;*/
             /*height: 100%;*/
             display: block;
@@ -27,11 +31,13 @@
             text-align: center;
             cursor: default;
         }
-        #main ul{
+
+        #main ul {
 
             display: none;
         }
-        #main ul li{
+
+        #main ul li {
             height: 30px;
             width: 100px;
             border-bottom: 1px dashed;
@@ -61,21 +67,21 @@
     </li>
 </ul>
 <script>
-    var oUl=document.getElementById("main");
-    var aLi=oUl.getElementsByTagName("li");
-    for(var i=0;i<aLi.length;i++)
-    {
-        if(aLi[i].className="main-menu")
-        {
-            aLi[i].onclick=function () {
-                var oUl2=this.getElementsByTagName("ul")[0];
-                if(oUl2.style.display=="block")
-                {
-                    oUl2.style.display="none";
+    var oUl = document.getElementById("main");
+    var aLi = oUl.getElementsByTagName("li");
+    var bShow = false;  //false代表隐藏状态
+    for (var i = 0; i < aLi.length; i++) {
+        if (aLi[i].className = "main-menu") {
+            aLi[i].onclick = function () {
+                var oUl2 = this.getElementsByTagName("ul")[0];
+                if (bShow) {
+                    oUl2.style.display = "none";
+                    bShow = !bShow;
                     console.log(oUl2.style.display);
                 }
                 else {
-                    oUl2.style.display="block";
+                    oUl2.style.display = "block";
+                    bShow = !bShow;
                     console.log(oUl2.style.display);
                 }
             }
