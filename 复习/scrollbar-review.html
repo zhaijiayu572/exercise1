@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>scrollbar-review</title>
+    <style>
+        #container{
+            height: 200px;
+            width: 300px;
+            position: relative;
+            float: left;
+            overflow: hidden;
+        }
+        #content{
+            width: 300px;
+            position: absolute;
+            left: 0;
+            top:0;
+        }
+        #scroll-bar{
+            float: left;
+            height: 200px;
+            width: 20px;
+            position: relative;
+            background-color: #999999;
+        }
+        #scroll-button{
+            cursor: pointer;
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            top:0;
+            left: 0;
+            background-color: #00FF00;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊22
+    </div>
+</div>
+<div id="scroll-bar">
+    <div id="scroll-button"></div>
+</div>
+<script>
+    (function () {
+        var oContainer = document.getElementById("container");
+        var oContent = document.getElementById("content");
+        var oScrollBar = document.getElementById("scroll-bar");
+        var oButton = document.getElementById('scroll-button');
+        var iContentMax = oContent.offsetHeight - oContainer.offsetHeight;
+        var iButtonMax = oScrollBar.offsetHeight - oButton.offsetHeight;
+        var fRate = iContentMax/iButtonMax;
+        oButton.onmousedown = function (e) {
+            e = window.event || e;
+            var iDisY = e.clientY - this.offsetTop;
+            document.onmousemove = function (e) {
+                e = e||window.event;
+                var iY = e.clientY - iDisY;
+                if(iY >iButtonMax){
+                    iY = iButtonMax;
+                }
+                if(iY < 0){
+                    iY = 0;
+                }
+                oButton.style.top = iY + 'px';
+                oContent.style.top = -iY*fRate + 'px';
+                return false;
+            }
+        };
+        document.onmouseup = function () {
+            document.onmousemove = null;
+        }
+
+    })()
+</script>
+</body>
+</html>

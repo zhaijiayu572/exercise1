@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜-review</title>
+    <style>
+        #small-img{
+            float: left;
+            height: 200px;
+            width: 200px;
+            background-image: url("../img/small.jpg");
+            position:relative;
+        }
+        #mask{
+            opacity: 0;
+            filter: alpha(opacity=0);
+            background-color: black;
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            top:0;
+            left: 0;
+            z-index: 100;
+        }
+        #amplifier{
+            height: 100px;
+            width: 100px;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            background-color: magenta;
+            position: absolute;
+            top:0;
+            left: 0;
+            display: none;
+        }
+        #big-img{
+            height: 200px;
+            width: 200px;
+            overflow: hidden;
+            position: relative;
+            float: left;
+        }
+        #big-pic{
+            position: absolute;
+            left: 0;
+            top:0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="small-img">
+    <div id="mask"></div>
+    <div id="amplifier"></div>
+</div>
+<div id="big-img">
+    <img src="../img/big.jpg" alt="" id="big-pic">
+</div>
+<script>
+    (function () {
+        var oSmallImg = document.getElementById("small-img");
+        var oMask = document.getElementById("mask");
+        var oAmolifier =  document.getElementById("amplifier");
+        var oBigImg = document.getElementById('big-img');
+        var oBigPic = document.getElementById('big-pic');
+
+        oMask.onmouseover = function () {
+            oAmolifier.style.display = 'block';
+            oBigPic.style.display = 'block';
+            oMask.onmousemove = function (e) {
+                e = e||window.event;
+                var iPicMaxX = oBigPic.offsetWidth - oBigImg.offsetWidth;
+                var iPicMaxY = oBigPic.offsetHeight - oBigImg.offsetHeight;
+                var iAmplifierMaxY = oSmallImg.offsetHeight - oAmolifier.offsetHeight;
+                var iAmplifierMaxX = oSmallImg.offsetWidth - oAmolifier.offsetWidth;
+                console.log(iAmplifierMaxY);
+                var fRateX = -iPicMaxX/iAmplifierMaxX;
+                var fRateY = -iPicMaxY/iAmplifierMaxY;
+                var iX = e.clientX - oAmolifier.offsetWidth/2;
+                var iY = e.clientY - oAmolifier.offsetHeight/2;
+                if(iY >iAmplifierMaxY){
+                    iY = iAmplifierMaxY;
+                }
+                if(iY < 0){
+                    iY = 0;
+                }
+                if(iX >iAmplifierMaxX){
+                    iX = iAmplifierMaxX;
+                }
+                if(iX < 0){
+                    iX = 0;
+                }
+                console.log(iX);
+                console.log(iY);
+                oAmolifier.style.left = iX + 'px';
+                oAmolifier.style.top = iY + 'px';
+                oBigPic.style.left = iX*fRateX + 'px';
+                oBigPic.style.top = iY*fRateY + 'px';
+            }
+        }
+    })()
+</script>
+</body>
+</html>

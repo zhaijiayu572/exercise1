@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>drag-review</title>
+    <style>
+        #drag{
+            height: 400px;
+            width: 400px;
+            background-color: #00FF00;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="drag"></div>
+</body>
+<script>
+    (function () {
+        var oDrag = document.getElementById("drag");
+        oDrag.onmousedown = function (e) {
+            e = e||window.event;
+            var iDisX = e.clientX - this.offsetLeft;
+            var iDisY = e.clientY - this.offsetTop;
+            document.onmousemove = function (e) {
+                e = e||window.event;
+                var iX = e.clientX - iDisX;
+                var iY = e.clientY -iDisY;
+                oDrag.style.left = iX + 'px';
+                oDrag.style.top = iY + 'px';
+            }
+        };
+        oDrag.onmouseup = function () {
+            document.onmousemove = null;
+        }
+    })()
+</script>
+</html>
