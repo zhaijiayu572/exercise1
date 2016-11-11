@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>circularly</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            height: 100px;
+            width: 165px;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 1px solid;
+            position: relative;
+        }
+        #container div{
+            height: 100px;
+            width: 50px;
+            background-color: black;
+            color: white;
+            position: absolute;
+            top:0;
+        }
+        .block1{
+            left:0;
+        }
+        .block2 {
+            left: 55px;
+        }
+        .block3{
+            left: 110px;
+        }
+        .block4{
+            left: 165px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="block1">1</div>
+    <div class="block2">2</div>
+    <div class="block3">3</div>
+    <div class="block4">4</div>
+</div>
+<button id="btn">back</button>
+<script>
+    (function () {
+        var oContainer = document.getElementById("container");
+        var aDiv = oContainer.getElementsByTagName("div");
+        var oBtn = document.getElementById("btn");
+        var bFlag = true;
+        var timer = setInterval(function () {
+            for(var i=0;i<aDiv.length;i++){
+                aDiv[i].style.left = (aDiv[i].offsetLeft - 1) + 'px';
+                if(aDiv[i].offsetLeft <= -(aDiv[i].offsetWidth+5)){
+                    aDiv[i].style.left = 165 + 'px';
+                }
+            }
+        },10);
+        oContainer.onmouseover = function () {
+            clearInterval(timer);
+        };
+        oContainer.onmouseout = function () {
+            if(!bFlag){
+                timer = setInterval(function () {
+                    for(var i=0;i<aDiv.length;i++){
+                        aDiv[i].style.left = (aDiv[i].offsetLeft + 1) + 'px';
+                        if(aDiv[i].offsetLeft >= 170){
+                            aDiv[i].style.left = -50 + 'px';
+                        }
+                    }
+                },10);
+            }else{
+                timer = setInterval(function () {
+                    for(var i=0;i<aDiv.length;i++){
+                        aDiv[i].style.left = (aDiv[i].offsetLeft - 1) + 'px';
+                        if(aDiv[i].offsetLeft <= -(aDiv[i].offsetWidth+5)){
+                            aDiv[i].style.left = 165 + 'px';
+                        }
+                    }
+                },10);
+            }
+        };
+        oBtn.onclick = function () {
+            clearInterval(timer);
+            if(bFlag){
+                timer = setInterval(function () {
+                    for(var i=0;i<aDiv.length;i++){
+                        aDiv[i].style.left = (aDiv[i].offsetLeft + 1) + 'px';
+                        if(aDiv[i].offsetLeft >= 170){
+                            aDiv[i].style.left = -50 + 'px';
+                        }
+                    }
+                },10);
+                bFlag=!bFlag;
+            }else{
+                timer = setInterval(function () {
+                    for(var i=0;i<aDiv.length;i++){
+                        aDiv[i].style.left = (aDiv[i].offsetLeft - 1) + 'px';
+                        if(aDiv[i].offsetLeft <= -(aDiv[i].offsetWidth+5)){
+                            aDiv[i].style.left = 165 + 'px';
+                        }
+                    }
+                },10);
+                bFlag = !bFlag;
+            }
+        }
+    })();
+</script>
+</body>
+</html>
