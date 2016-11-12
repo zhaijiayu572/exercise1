@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图另一种方式实现</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        #container {
+            width: 680px;
+            height: 344px;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #tab {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        #tab li {
+            width: 20px;
+            height: 20px;
+            float: left;
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 20px;
+            text-align: center;
+            margin-right: 5px;
+            cursor: pointer;
+
+        }
+
+        #tab .selected {
+            background-color: orange;
+        }
+
+        #content {
+            position: absolute;
+        }
+
+        #content img {
+            float: left;
+        }
+
+        #arrow {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+        }
+
+        #arrow span {
+            height: 20px;
+            width: 20px;
+            background-color: black;
+            color: white;
+            float: left;
+            text-align: center;
+            line-height: 20px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <img src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+    </div>
+    <ul id="tab">
+        <li class="selected">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <div id="arrow">
+        <span id="last">&lt;</span>
+        <span id="next">&gt;</span>
+    </div>
+</div>
+<script src="jslib.js"></script>
+<script>
+    window.onload = function () {
+        var oContainer = document.getElementById("container");
+        var oUl = document.getElementById("tab");
+        var aLi = oUl.getElementsByTagName("li");
+        var oCon = document.getElementById("content");
+        var aImg = oCon.getElementsByTagName("img");
+        var oLast = document.getElementById("last");
+        var oNext = document.getElementById("next");
+        var iNow = 0;
+        var oImg = aImg[0].cloneNode();
+        oCon.appendChild(oImg);
+
+        oCon.style.width = aImg[0].offsetWidth * aImg.length + 'px';
+        function change(index) {
+            for (var j = 0; j < aLi.length; j++) {
+                aLi[j].className = "";
+            }
+            aLi[index == 4 ? 0 : index].className = "selected";
+//            var timer =setInterval(function () {
+//                i = i + (aImg[0].offsetWidth/100);
+//                oCon.style.left = -i + 'px';
+//                if(i >=  index * aImg[0].offsetWidth)
+//                {
+//                    clearInterval(timer);
+//                }
+//            },1);
+            var iLeft = -index * aImg[0].offsetWidth;
+            animate(oCon, {left: iLeft});
+        }
+
+        for (var i = 0; i < aLi.length; i++) {
+            aLi[i].index = i;
+            aLi[i].onmouseover = function () {
+                change(this.index);
+                iNow = this.index;
+            }
+
+        }
+        oNext.onclick = function () {
+            iNow++;
+            if(iNow == 5){
+                oCon.style.left = 0;
+                iNow = 1;
+            }
+            change(iNow);
+        };
+        oLast.onclick = function () {
+            iNow--;
+            if (iNow < 0) {
+                oCon.style.left = -4* aImg[0].offsetWidth + 'px';
+                iNow = aLi.length - 1;
+            }
+            change(iNow);
+        };
+        var timer = setInterval(function () {
+            oNext.onclick();
+        }, 3000);
+        oContainer.onmouseover = function () {
+            clearInterval(timer);
+        };
+        oContainer.onmouseout = function () {
+            timer = setInterval(function () {
+                oNext.onclick();
+            }, 1000);
+        }
+    }
+
+
+</script>
+</body>
+</html>
