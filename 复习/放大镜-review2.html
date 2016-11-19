@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜-review2</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #normal{
+            width: 200px;
+            height: 200px;
+            position: relative;
+            float: left;
+            background: url("../img/small.jpg") no-repeat;
+        }
+        #mask{
+            width:200px;
+            height: 200px;
+            position: absolute;
+            z-index: 100;
+        }
+        #magnifier{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top:0;
+            background-color: #ff00ff;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            display: none;
+        }
+        #container{
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            float: left;
+        }
+        #big-picture{
+            height: 400px;
+            width: 400px;
+            position: absolute;
+            left: 0;
+            top:0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="normal">
+    <div id="mask"></div>
+    <div id="magnifier"></div>
+</div>
+<div id="container">
+    <img src="../img/big.jpg" alt="" id="big-picture">
+</div>
+<script>
+    (function () {
+        var oMagnifier = document.getElementById("magnifier");
+        var oMask = document.getElementById("mask");
+        var oBigPicture = document.getElementById("big-picture");
+        var oContainer = document.getElementById("container");
+        oMask.onmouseover = function () {
+            oMagnifier.style.display = "block";
+            oBigPicture.style.display = "block";
+            var iMaxX = oMask.offsetWidth - oMagnifier.offsetWidth;
+            var iMaxY = oMask.offsetHeight - oMagnifier.offsetHeight;
+            var fRateX = (oBigPicture.offsetWidth - oContainer.offsetWidth)/iMaxX;
+            var fRateY = (oBigPicture.offsetHeight - oContainer.offsetHeight)/iMaxY;
+            oMask.onmousemove = function (e) {
+                e = e||window.event;
+                var iDisX = e.clientX - oMagnifier.offsetWidth/2;
+                var iDisY = e.clientY - oMagnifier.offsetHeight/2;
+                if(iDisX < 0){
+                    iDisX = 0;
+                }
+                if(iDisX > iMaxX){
+                    iDisX = iMaxX;
+                }
+                if(iDisY < 0){
+                    iDisY = 0;
+                }
+                if(iDisY > iMaxY) {
+                    iDisY = iMaxY;
+                }
+                oMagnifier.style.left = iDisX + 'px';
+                oMagnifier.style.top = iDisY + 'px';
+                oBigPicture.style.left = -iDisX*fRateX + 'px';
+                oBigPicture.style.top = -iDisY*fRateY + 'px';
+            }
+
+        };
+        oMask.onmouseout = function () {
+            oMagnifier.style.display = "none";
+            oBigPicture.style.display = "none";
+            oMask.onmousemove = null;
+        }
+    })()
+</script>
+</body>
+</html>
