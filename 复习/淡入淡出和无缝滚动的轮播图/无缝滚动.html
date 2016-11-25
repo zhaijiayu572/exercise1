@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>无缝滚动复习3</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #container{
+            height: 344px;
+            width: 680px;
+            position: relative;
+            overflow: hidden;
+        }
+        #content{
+            height: 344px;
+            position: absolute;
+            left: 0;
+            top:0;
+        }
+        #content img{
+            height: 344px;
+            width: 680px;
+            float: left;
+        }
+        #panel{
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+        }
+        #panel span{
+            height: 20px;
+            width: 20px;
+            background: #000000;
+            color: #ffffff;
+            text-align: center;
+            line-height: 20px;
+            float: left;
+            margin-left:20px;
+        }
+        #list{
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+        #list li{
+            height: 20px;
+            width: 20px;
+            background: #000000;
+            color: #ffffff;
+            text-align: center;
+            line-height: 20px;
+            float: left;
+            margin-left:5px;
+        }
+        #list li.selected{
+            background: #ff00ff;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <img src="../../img/1.jpg" alt="">
+        <img src="../../img/2.jpg" alt="">
+        <img src="../../img/3.jpg" alt="">
+        <img src="../../img/4.jpg" alt="">
+    </div>
+    <ul id="list">
+        <li class="selected">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <div id="panel">
+        <span id="prev">&lt;</span>
+        <span id="next">&gt;</span>
+    </div>
+</div>
+<script src="animate.js"></script>
+<script>
+    var oContainer = document.getElementById('container');
+    var oContent = document.getElementById('content');
+    var aImg = oContent.getElementsByTagName('img');
+    var oList = document.getElementById("list");
+    var aLi = oList.getElementsByTagName('li');
+    var oNext = document.getElementById('next');
+    var oPrev = document.getElementById('prev');
+    var iNow = 0;
+    var oImg = aImg[0].cloneNode();
+    oContent.appendChild(oImg);
+    oContent.style.width = aImg[0].offsetWidth * aImg.length + 'px';
+    for(var i=0;i<aLi.length;i++){
+        aLi[i].index = i;
+        aLi[i].onmouseover = function () {
+            iNow = this.index;
+            change(iNow);
+        }
+    }
+    function change(index) {
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].className = '';
+        }
+        aLi[index>aLi.length-1?0:index].className = 'selected';
+        var iLeft = -oImg.offsetWidth * index ;
+        animate(oContent,{left:iLeft});
+    }
+    oNext.onclick = function () {
+        iNow++;
+        if(iNow>aImg.length-1){
+            oContent.style.left = 0;
+            iNow = 1;
+        }
+        change(iNow);
+    };
+    oPrev.onclick = function () {
+        iNow--;
+        if(iNow<0){
+            oContent.style.left = -oImg.offsetWidth *(aImg.length-1) +'px';
+            iNow = aImg.length-2;
+        }
+        change(iNow);
+    };
+    var timer = setInterval(function () {
+        oNext.onclick();
+    },1000);
+    oContainer.onmouseover = function () {
+        clearInterval(timer);
+    };
+    oContainer.onmouseout = function () {
+        timer = setInterval(function () {
+            oNext.onclick();
+        },1000);
+    }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
