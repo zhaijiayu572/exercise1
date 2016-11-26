@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编程题2</title>
+</head>
+<body>
+<script>
+    var str = "abc abcd dadsa adawawd";
+    var aStr = str.split(' ');
+    var iMin = 999999999;
+    var iMinIndex = 0;
+    var iMax = 0;
+    var iMaxIndex = 0;
+    for(var i=0;i<aStr.length;i++){
+        var iLength = aStr[i].length;
+        if(iLength>iMax){
+            iMax = iLength;
+            iMaxIndex = i;
+        }
+        if(iLength<iMin){
+            iMin = iLength;
+            iMinIndex  = i;
+        }
+    }
+    console.log("最长的单词是"+aStr[iMaxIndex]);
+    console.log("最短的单词是"+aStr[iMinIndex]);
+</script>
+</body>
+</html>

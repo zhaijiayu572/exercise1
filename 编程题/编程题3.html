@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编程题3</title>
+</head>
+<body>
+<script>
+    var str = "dafdwfmqwa";
+    var aStr = str.split('');
+    for(var i=0;i<aStr.length;i++){
+        for(var j=0;j<aStr.length;j++){
+            if(i==j){
+                continue;
+            }
+            if(aStr[i]==aStr[j]){
+                break;
+            }
+        }
+        if(j==aStr.length){
+            console.log("第一个不重复的是"+aStr[i]);
+            break;
+        }
+    }
+</script>
+
+</body>
+</html>
