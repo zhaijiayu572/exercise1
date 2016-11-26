@@ -16,11 +16,16 @@
     left: 0;
     top:0;
 }
-#content img{
+#content div{
+    height: 320px;
+    width: 400px;
     position: absolute;
-    height: 100%;
-    width: 100%;
 }
+/*#content img{*/
+    /*position: absolute;*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+/*}*/
 #slide-bar{
     position: absolute;
     left: 0;
@@ -48,7 +53,7 @@
     height: 60px;
     width: 60px;
     z-index: 999999;
-    display: none;
+    opacity: 0;
 }
 #next{
     position: absolute;
@@ -58,5 +63,5 @@
     height: 60px;
     width: 60px;
     z-index: 9999999;
-    display: none;
+    opacity: 0;
 }
