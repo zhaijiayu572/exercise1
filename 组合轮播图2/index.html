@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组合轮播图2</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        body{
+            background: #666;
+        }
+        #container{
+            width: 400px;
+            height: 434px;
+            margin: 50px auto;
+        }
+        #big-pic{
+            width: 400px;
+            height: 320px;
+            position: relative;
+        }
+        #big-img{
+            width: 400px;
+            height: 320px;
+            position: absolute;
+        }
+        #big-img li{
+            width: 400px;
+            height: 320px;
+            position: absolute;
+            top:0;
+            left: 0;
+            overflow: hidden;
+        }
+        /*#big-img li img{*/
+            /*width: 400px;*/
+            /*height: 320px;*/
+        /*}*/
+        #left,#right{
+            width: 200px;
+            height: 320px;
+            position: absolute;
+            top:0;
+            z-index: 99999;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+        #left{
+            left: 0;
+        }
+        #right{
+            right: 0;
+        }
+        #left-btn,#right-btn{
+            height: 60px;
+            width: 60px;
+            position: absolute;
+            top:130px;
+        }
+        #left-btn{
+            left: 10px;
+            background: url("img/btn.gif");
+        }
+        #right-btn{
+            right: 10px;
+            background: url("img/btn.gif") bottom;
+        }
+        #text{
+            width: 400px;
+            height: 30px;
+            line-height: 30px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: #000000;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            z-index: 99998;
+        }
+        #left-text{
+            float: left;
+            color: #ffffff;
+            margin-left: 10px;
+        }
+        #right-text{
+            float: right;
+            color: #ffffff;
+            margin-right: 10px;
+        }
+        #small-pic{
+            height: 114px;
+            width: 400px;
+            background: #999999;
+            overflow: hidden;
+            position: relative;
+        }
+        #small-img{
+            width: 780px;
+            position: absolute;
+
+        }
+        #small-img li{
+            width: 120px;
+            height: 94px;
+            margin: 10px 0 10px 10px;
+            float: left;
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+        }
+        #small-img li img{
+            width: 120px;
+            height: 94px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="big-pic">
+        <ul id="big-img">
+            <li style="z-index: 1"><img src="img/1.jpg" alt="" title="仰望天空"></li>
+            <li><img src="img/2.jpg" alt="" title="古典家具"></li>
+            <li><img src="img/3.jpg" alt="" title="运动潮人"></li>
+            <li><img src="img/4.jpg" alt="" title="动感汽车"></li>
+            <li><img src="img/5.jpg" alt="" title="时尚靓女"></li>
+            <li><img src="img/6.jpg" alt="" title="绚丽色彩"></li>
+        </ul>
+        <div id="left"><span id="left-btn"></span></div>
+        <div id="right"><span id="right-btn"></span></div>
+        <div id="text">
+            <span id="left-text">仰望天空</span>
+            <div id="right-text">
+                <span id="num">1</span>/<span>6</span>
+            </div>t
+        </div>
+    </div>
+    <div id="small-pic">
+        <ul id="small-img">
+            <li style="opacity: 1"><img src="img/1.jpg" alt=""></li>
+            <li><img src="img/2.jpg" alt=""></li>
+            <li><img src="img/3.jpg" alt=""></li>
+            <li><img src="img/4.jpg" alt=""></li>
+            <li><img src="img/5.jpg" alt=""></li>
+            <li><img src="img/6.jpg" alt=""></li>
+        </ul>
+    </div>
+</div>
+<script src="jslib.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>
