@@ -58,16 +58,19 @@ for(var j=0;j<aSmallLi.length;j++){
         }
     }
 }
+oContainer.onselectstart = function () {
+    return false;
+};
 var timer = setInterval(function () {
     oRightBtn.onclick();
-},1500);
+},3000);
 oContainer.onmouseover = function () {
     clearInterval(timer);
 };
 oContainer.onmouseout = function () {
     timer = setInterval(function () {
         oRightBtn.onclick();
-    },1500);
+    },3000);
 };
 function changeImg(index) {
     aBigLi[index].style.height = 0;
