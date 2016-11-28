@@ -1,0 +1,96 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    background: #666666;
+}
+ul{
+    list-style: none;
+}
+#container{
+    width: 400px;
+    height: 434px;
+    margin: 50px auto;
+}
+#content{
+    height: 320px;
+    width: 400px;
+    position: relative;
+}
+#big-img li{
+    width: 400px;
+    height: 320px;
+    position: absolute;
+    overflow: hidden;
+}
+#left,#right{
+    height: 320px;
+    width: 200px;
+    position: absolute;
+    top:0;
+    z-index: 99999;
+    opacity: 0;
+}
+#left{
+    left: 0;
+}
+#right{
+    right: 0;
+}
+#left-btn,#right-btn{
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    top:130px;
+}
+#left-btn{
+    left: 10px;
+    background: url("img/btn.gif");
+}
+#right-btn{
+    right: 10px;
+    background: url("img/btn.gif") no-repeat bottom;
+}
+#text{
+    height: 30px;
+    width: 400px;
+    line-height: 30px;
+    opacity: 0.5;
+    background: #000000;
+    color: #ff00ff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 99998;
+}
+#left-text{
+    float: left;
+    margin-left: 10px;
+}
+#right-text{
+    float: right;
+    margin-right: 10px;
+}
+#slide-bar{
+    background: #999999;
+    height: 114px;
+    width: 400px;
+    position: relative;
+    overflow: hidden;
+}
+#small-img{
+    width: 780px;
+    position: absolute;
+}
+#small-img li{
+    width: 120px;
+    height: 94px;
+    float: left;
+    margin: 10px 0 10px 10px;
+    opacity: 0.5;
+}
+#small-img li img{
+    height: 94px;
+    width: 120px;
+}
