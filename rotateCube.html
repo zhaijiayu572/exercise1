@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rotateCube</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: #000000;
+            -webkit-perspective: 800px;
+            -webkit-perspective-origin: center 50%;
+        }
+        #container{
+            margin: 100px auto;
+            height: 200px;
+            width: 200px;
+            position: relative;
+            -webkit-transform-style: preserve-3d;
+            -webkit-animation: rotate 3s ease infinite;
+        }
+        @-webkit-keyframes rotate {
+            from{
+
+            }to{
+                -webkit-transform: rotateY(-360deg) rotateX(360deg) rotateZ(-90deg);
+
+                         }
+        }
+        .cube{
+            height: 200px;
+            width: 200px;
+            position: absolute;
+
+            text-align: center;
+            line-height: 200px;
+            border-radius: 10px;
+        }
+        .four{
+            -webkit-transform: rotateY(180deg) translateZ(100px);
+            background: rgba(255,0,0,0.6);
+        }
+        .one{
+            -webkit-transform: rotateX(90deg) translateZ(100px);
+            background: rgba(255,255,0,0.6);
+        }
+        .six{
+            -webkit-transform: rotateX(-90deg) translateZ(100px);
+            background: rgba(0,255,255,0.6);
+        }
+        .three{
+            -webkit-transform: rotateY(-90deg) translateZ(100px);
+            background: rgba(0,0,255,0.6);
+        }
+        .five{
+            -webkit-transform: rotateY(90deg) translateZ(100px);
+            background: rgba(255,0,255,0.6);
+        }
+        .two{
+            -webkit-transform: translateZ(100px);
+            background: rgba(0,255,0,0.6);
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="cube one">1</div>
+    <div class="cube two">2</div>
+    <div class="cube three">3</div>
+    <div class="cube four">4</div>
+    <div class="cube five">5</div>
+    <div class="cube six">6</div>
+</div>
+</body>
+</html>
