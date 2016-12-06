@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组合轮播图复习3</title>
+    <style>
+        body{
+            background: #999999;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #container{
+            width: 400px;
+            height: 434px;
+            margin: 50px auto;
+        }
+        #content{
+            width: 400px;
+            height: 320px;
+            position: relative;
+        }
+        #big-pic li{
+            height: 320px;
+            width: 400px;
+            position: absolute;
+            left: 0;
+            top:0;
+            overflow: hidden;
+        }
+        #big-pic li img{
+            width: 400px;
+            height: 320px;
+        }
+        #left,#right{
+            width: 200px;
+            height: 320px;
+            position: absolute;
+            top:0;
+            z-index: 99999;
+        }
+        #left{
+            left: 0;
+        }
+        #right{
+            right: 0;
+        }
+        #left-button{
+            height: 60px;
+            width: 60px;
+            position: absolute;
+            left: 20px;
+            top:120px;
+            background: url("img/btn.gif");
+            opacity: 0;
+        }
+        #right-btn{
+            height: 60px;
+            width: 60px;
+            position: absolute;
+            right:20px;
+            top:120px;
+            background: url("img/btn.gif") bottom;
+            opacity: 0;
+        }
+        #text{
+            width: 400px;
+            height: 30px;
+            line-height: 30px;
+            position: absolute;
+            bottom:0;
+            left: 0;
+            background: rgba(0,0,0,0.5);
+            color: #ffffff;
+            z-index: 99998;
+        }
+        #left-text{
+            float: left;
+            margin-left: 20px;
+        }
+        #right-text{
+            float: right;
+            margin-right: 20px;
+        }
+        #slide-bar{
+            background: #cccccc;
+            width: 400px;
+            height: 114px;
+            position: relative;
+            overflow: hidden;
+        }
+        #small-pic{
+            height: 94px;
+            width: 780px;
+            position: absolute;
+            left: 0;
+            top:0;
+        }
+        #small-pic img{
+            height: 94px;
+            width: 120px;
+            margin:10px 0 10px 10px;
+            float: left;
+            opacity: 0.6;
+        }
+        #small-pic .selected{
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <ul id="big-pic">
+            <li style="z-index: 1"><img src="img/1.jpg" alt="" title="仰望天空"></li>
+            <li><img src="img/2.jpg" alt="" title="古典家具"></li>
+            <li><img src="img/3.jpg" alt="" title="时尚潮男"></li>
+            <li><img src="img/4.jpg" alt="" title="动感汽车"></li>
+            <li><img src="img/5.jpg" alt="" title="诱惑美女"></li>
+            <li><img src="img/6.jpg" alt="" title="五光十色"></li>
+        </ul>
+        <div id="left">
+            <div id="left-button"></div>
+        </div>
+        <div id="right">
+            <div id="right-btn"></div>
+        </div>
+        <div id="text">
+            <div id="left-text">仰望天空</div>
+            <div id="right-text">
+                <span id="num">1</span>/<span>6</span>
+            </div>
+        </div>
+    </div>
+    <div id="slide-bar">
+        <div id="small-pic">
+            <img src="img/1.jpg" alt="" class="selected">
+            <img src="img/2.jpg" alt="">
+            <img src="img/3.jpg" alt="">
+            <img src="img/4.jpg" alt="">
+            <img src="img/5.jpg" alt="">
+            <img src="img/6.jpg" alt="">
+        </div>
+    </div>
+</div>
+<script src="jslib.js"></script>
+<script>
+    var oBigPic = document.getElementById('big-pic');
+    var aBigImg = oBigPic.getElementsByTagName('li');
+    var oLeft = document.getElementById("left");
+    var oRight = document.getElementById('right');
+    var oLeftBtn = document.getElementById('left-button');
+    var oRightBtn = document.getElementById('right-btn');
+    var oSmallPic = document.getElementById('small-pic');
+    var aSmallImg = oSmallPic.getElementsByTagName('img');
+    var oNum = document.getElementById('num');
+    var oLeftText = document.getElementById('left-text');
+    var iZindex = 1;
+    var iNow = 0;
+    oLeft.onmouseover = function () {
+        animate(oRightBtn,{opacity:0});
+        animate(oLeftBtn,{opacity:100});
+    };
+    oLeft.onmouseout = oRight.onmouseout =function () {
+        animate(oRightBtn,{opacity:0});
+        animate(oLeftBtn,{opacity:0});
+    };
+    oRight.onmouseover = function () {
+        animate(oRightBtn,{opacity:100});
+        animate(oLeftBtn,{opacity:0});
+    };
+    oLeftBtn.onclick = function () {
+        iNow--;
+        if(iNow<0){
+            iNow = aBigImg.length-1;
+        }
+        changeImg(iNow);
+    };
+    oRightBtn.onclick = function () {
+        iNow ++ ;
+        if(iNow>aBigImg.length-1){
+            iNow = 0;
+        }
+        changeImg(iNow);
+    };
+    for(var i=0;i<aSmallImg.length;i++){
+        aSmallImg[i].index = i;
+        aSmallImg[i].onclick = function () {
+            iNow = this.index;
+            changeImg(iNow);
+        };
+        aSmallImg[i].onmouseover = function () {
+            this.className = "selected";
+        };
+        aSmallImg[i].onmouseout = function () {
+            if(this.index!=iNow){
+                this.className = "";
+            }
+        }
+    }
+    function changeImg(index) {
+        aBigImg[index].style.zIndex = ++iZindex;
+        aBigImg[index].style.height = 0;
+        animate(aBigImg[index],{height:320});
+        oNum.innerHTML = index+1;
+        oLeftText.innerHTML = aBigImg[index].children[0].title;
+        for(var i=0;i<aSmallImg.length;i++){
+            aSmallImg[i].className = "";
+        }
+        aSmallImg[index].className = "selected";
+        if(index<2){
+            animate(oSmallPic,{left:0});
+        }else if(index>aBigImg.length-2){
+            animate(oSmallPic,{left:-(aSmallImg[0].offsetWidth+10)*(aSmallImg.length-3)})
+        }else{
+            animate(oSmallPic,{left:-(aSmallImg[0].offsetWidth+10)*(index-1)})
+        }
+    }
+</script>
+</body>
+</html>
