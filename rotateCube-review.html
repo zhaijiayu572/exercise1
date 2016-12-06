@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rotateCube-review</title>
+    <style>
+        body{
+            background: #000000;
+            -webkit-perspective: 800px;
+            -webkit-perspective-origin: center 50px;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #container{
+            height: 200px;
+            width: 200px;
+            margin: 200px auto;
+            -webkit-transform-style: preserve-3d;
+            -webkit-animation: rotate 2s ease infinite;
+        }
+        @-webkit-keyframes rotate {
+            from{}
+            to{
+                -webkit-transform: rotateY(-360deg);
+            }
+        }
+        .cube{
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top:0;
+            background: rgba(255,255,255,0.6);
+            text-align: center;
+            line-height: 200px;
+
+        }
+
+        #four{
+            -webkit-transform: rotateY(180deg) translateZ(100px);
+        }
+        #one{
+            -webkit-transform: rotateX(90deg) translateZ(100px);
+        }
+        #six{
+            -webkit-transform: rotateX(-90deg) translateZ(100px);
+        }
+        #three{
+            -webkit-transform: rotateY(90deg) translateZ(100px);
+        }
+        #five{
+            -webkit-transform: rotateY(-90deg) translateZ(100px);
+        }
+        #two{
+            -webkit-transform: translateZ(100px);
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="cube" id="one">1</div>
+    <div class="cube" id="two">2</div>
+    <div class="cube" id="three">3</div>
+    <div class="cube" id="four">4</div>
+    <div class="cube" id="five">5</div>
+    <div class="cube" id="six">6</div>
+</div>
+</body>
+</html>
