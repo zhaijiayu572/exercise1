@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>可拖拽的图片墙复习4</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            margin: 50px auto;
+            position: relative;
+            width: 660px;
+            height: 510px;
+        }
+        #container img{
+            height: 150px;
+            width: 200px;
+            float: left;
+            margin: 10px;
+        }
+        #container img.selected{
+            border: 5px solid red;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <img src="../images/1.jpg" alt="">
+    <img src="../images/2.jpg" alt="">
+    <img src="../images/3.jpg" alt="">
+    <img src="../images/4.jpg" alt="">
+    <img src="../images/5.jpg" alt="">
+    <img src="../images/6.jpg" alt="">
+    <img src="../images/7.jpg" alt="">
+    <img src="../images/8.jpg" alt="">
+    <img src="../images/9.jpg" alt="">
+</div>
+<script src="animate.js"></script>
+<script>
+    var oContainer = document.getElementById('container');
+    var aImg = oContainer.getElementsByTagName('img');
+    var iZindex = 1;
+    var oCollide = null;
+    for(var i=aImg.length-1;i>=0;i--){
+//        console.log(aImg[i]);
+        aImg[i].style.left = aImg[i].offsetLeft + 'px';
+        aImg[i].style.top = aImg[i].offsetTop + 'px';
+        aImg[i].style.position = "absolute";
+        aImg[i].style.margin = 0;
+        aImg[i].pos = {
+            left:aImg[i].offsetLeft,
+            top:aImg[i].offsetTop
+        };
+        drag(aImg[i]);
+    }
+    function drag(elem) {
+        elem.onmousedown = function (e) {
+            e = e || window.event;
+            var iDisX = e.clientX - elem.offsetLeft;
+            var iDisY = e.clientY - elem.offsetTop;
+            elem.style.zIndex = iZindex++;
+            document.onmousemove = function (e) {
+                e = e || window.event;
+                var iLeft = e.clientX - iDisX;
+                var iTop = e.clientY - iDisY;
+                elem.style.left = iLeft + 'px';
+                elem.style.top = iTop + 'px';
+                var aCollide = [];
+                for(var j=0;j<aImg.length;j++){
+                    if(elem == aImg[j]){
+                        continue;
+                    }
+                    var isCollide = collide(elem,aImg[j]);
+                    if(isCollide){
+                        aCollide.push(aImg[j]);
+                    }
+                    aImg[j].className = '';
+                }
+                if(aCollide.length>0){
+                    oCollide = nearest(elem,aCollide);
+                    oCollide.className = "selected";
+                }else{
+                    oCollide = null;
+                }
+                return false;
+            };
+            document.onmouseup = function () {
+                if(oCollide){
+                    animate(elem,oCollide.pos);
+                    animate(oCollide,elem.pos);
+                    var exchange = elem.pos;
+                    elem.pos = oCollide.pos;
+                    oCollide.pos = exchange;
+                    oCollide.className = "";
+                    oCollide = null;
+                }else{
+                    animate(elem,elem.pos);
+                }
+
+                document.onmousemove = null;
+            }
+        }
+    }
+    function collide(elem,target) {
+        var elemLeft = elem.offsetLeft,
+                elemRight = elem.offsetLeft + elem.offsetWidth,
+                elemTop = elem.offsetTop,
+                elemBottom = elem.offsetTop + elem.offsetHeight;
+        var targetLeft = target.offsetLeft,
+                targetRight = target.offsetLeft + target.offsetWidth,
+                targetTop = target.offsetTop,
+                targetBottom = target.offsetTop + target.offsetHeight;
+        return !(elemLeft > targetRight || elemRight < targetLeft || elemTop > targetBottom || elemBottom < targetTop);
+    }
+    function nearest(elem,arr) {
+        var iMin = 99999999999;
+        var index = -1;
+        for(var i=0;i<arr.length;i++){
+            var iX = arr[i].offsetLeft - elem.offsetLeft;
+            var iY = arr[i].offsetTop - elem.offsetTop;
+            var iDis = iX*iX + iY*iY;
+            if(iDis<iMin){
+                iMin = iDis;
+                index = i;
+            }
+        }
+        return arr[index];
+    }
+</script>
+</body>
+</html>
