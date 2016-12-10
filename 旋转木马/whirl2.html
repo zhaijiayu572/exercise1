@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>旋转木马</title>
+    <title>旋转木马2</title>
     <style>
         *{
             margin: 0;
@@ -41,33 +41,46 @@
 <body>
 <div id="stage">
     <div id="container">
-        <img src="img/1.jpg" alt="">
-        <img src="img/2.jpg" alt="">
-        <img src="img/3.jpg" alt="">
-        <img src="img/4.jpg" alt="">
-        <img src="img/5.jpg" alt="">
-        <img src="img/6.jpg" alt="">
-        <img src="img/7.jpg" alt="">
-        <img src="img/8.jpg" alt="">
-        <img src="img/9.jpg" alt="">
+        <!--<img src="img/1.jpg" alt="">-->
+        <!--<img src="img/2.jpg" alt="">-->
+        <!--<img src="img/3.jpg" alt="">-->
+        <!--<img src="img/4.jpg" alt="">-->
+        <!--<img src="img/5.jpg" alt="">-->
+        <!--<img src="img/6.jpg" alt="">-->
+        <!--<img src="img/7.jpg" alt="">-->
+        <!--<img src="img/8.jpg" alt="">-->
+        <!--<img src="img/9.jpg" alt="">-->
     </div>
 </div>
 <script>
     var oContainer = document.getElementById('container');
     var aImg = oContainer.getElementsByTagName('img');
-    var iDis = 64/(Math.tan(20*Math.PI/180));
+    var iDis = oContainer.offsetWidth/2/(Math.tan(20*Math.PI/180));
     var index = 0;
     var i = 8;
-//    for(var i=0;i<aImg.length;i++){
-//
-//    }
-    var timer = setInterval(function () {
-        if(i==0){
-            clearInterval(timer);
+    var iLoadFlag = 0;
+    //    for(var i=0;i<aImg.length;i++){
+    //
+    //    }
+    for(var j=0;j<9;j++){
+        var oImg = new Image();
+        oImg.src = "img/"+(j+1)+".jpg";
+        oContainer.appendChild(oImg);
+        oImg.onload = function () {
+            iLoadFlag++;
+            if(iLoadFlag==9){
+                var timer = setInterval(function () {
+                    if(i==0){
+                        clearInterval(timer);
+                    }
+                    aImg[i].style.WebkitTransform = "rotateY("+-40*i+"deg) translateZ("+(iDis+20)+"px)";
+                    i--;
+                    console.log(aImg[i]);
+                },100);
+            }
         }
-        aImg[i].style.WebkitTransform = "rotateY("+-40*i+"deg) translateZ("+(iDis+20)+"px)";
-        i--;
-    },100);
+    }
+
     oContainer.onclick = function () {
         index++;
         this.style.transform = "rotateY("+-40*index+"deg)";
