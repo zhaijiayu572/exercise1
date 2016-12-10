@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转木马</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #stage{
+            margin: 100px auto;
+            height: 400px;
+            width: 1000px;
+            background: #cccccc;
+            -webkit-box-shadow: 10px 10px 10px #999;
+            position: relative;
+            -webkit-perspective: 800px;
+            -webkit-perspective-origin: 50% -10%;
+
+        }
+        #container{
+            width: 128px;
+            height: 100px;
+            position: absolute;
+            left: 436px;
+            top:100px;
+            -webkit-transform-style: preserve-3d;
+            -webkit-transition: transform 4s ease;
+        }
+        #container img{
+            width: 120px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<div id="stage">
+    <div id="container">
+        <img src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+        <img src="img/5.jpg" alt="">
+        <img src="img/6.jpg" alt="">
+        <img src="img/7.jpg" alt="">
+        <img src="img/8.jpg" alt="">
+        <img src="img/9.jpg" alt="">
+    </div>
+</div>
+<script>
+    var oContainer = document.getElementById('container');
+    var aImg = oContainer.getElementsByTagName('img');
+    var iDis = 64/(Math.tan(20*Math.PI/180));
+    var index = 0;
+    for(var i=0;i<aImg.length;i++){
+        aImg[i].style.WebkitTransform = "rotateY("+40*i+"deg) translateZ("+(iDis+20)+"px)";
+    }
+    oContainer.onclick = function () {
+        index++;
+        this.style.transform = "rotateY("+-40*index+"deg)";
+    }
+</script>
+</body>
+</html>
