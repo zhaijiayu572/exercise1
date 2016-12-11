@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转轮播图</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #container{
+            height: 344px;
+            width: 680px;
+            position: relative;
+            margin: 50px auto;
+            -webkit-perspective: 800px;
+        }
+        #content img{
+            position: absolute;
+            left: 0;
+            top:0;
+            -webkit-transform: rotateX(180deg);
+            -webkit-transform-origin: bottom;
+            opacity: 0;
+        }
+        #content .prevShow{
+            -webkit-animation: prevShow 1s linear forwards;
+        }
+        @-webkit-keyframes prevShow {
+            0%{
+                -webkit-transform: rotateX(-180deg);
+                opacity: 0;
+            }
+            50%{
+                -webkit-transform: rotateX(-8deg);
+            }
+            50%{
+                -webkit-transform: rotateX(-8deg);
+            }
+            60%{
+                -webkit-transform: rotateX(6deg);
+            }
+            70%{
+                -webkit-transform: rotateX(-4deg);
+            }
+            80%{
+                -webkit-transform: rotateX(2deg);
+            }
+            100%{
+                -webkit-transform: rotateX(0deg);
+                opacity: 1;
+            }
+        }
+        #content .prevHide{
+            -webkit-animation: prevHide 1s forwards;
+        }
+        @-webkit-keyframes prevHide {
+            from{
+                -webkit-transform: rotateX(0deg);
+                opacity: 1;
+            }
+            to{
+                -webkit-transform: rotateX(180deg);
+                opacity: 0;
+            }
+
+        }
+
+        #content .show{
+            -webkit-animation: show 1s linear forwards;
+        }
+        @-webkit-keyframes show {
+            0%{
+
+            }
+            50%{
+                -webkit-transform: rotateX(-8deg);
+            }
+            50%{
+                -webkit-transform: rotateX(-8deg);
+            }
+            60%{
+                -webkit-transform: rotateX(6deg);
+            }
+            70%{
+                -webkit-transform: rotateX(-4deg);
+            }
+            80%{
+                -webkit-transform: rotateX(2deg);
+            }
+            100%{
+                -webkit-transform: rotateX(0deg);
+                opacity: 1;
+            }
+        }
+        #content .hide{
+            -webkit-animation: hide 1s forwards;
+        }
+        @-webkit-keyframes hide {
+            from{
+                -webkit-transform: rotateX(0deg);
+                opacity: 1;
+            }
+            to{
+                -webkit-transform: rotateX(-180deg);
+                opacity: 0;
+            }
+
+        }
+        #container span{
+            height: 50px;
+            width: 50px;
+            border-radius: 25px;
+            line-height: 50px;
+            text-align: center;
+            background: #cccccc;
+            position: absolute;
+            top:122px;
+            font-size: 40px;
+        }
+        #prev{
+            left: -100px;
+        }
+        #next{
+            right: -100px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <img class="show" src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+    </div>
+    <span id="prev">&lt;</span>
+    <span id="next">&gt;</span>
+</div>
+<script>
+    var oContent = document.getElementById('content');
+    var aImg = oContent.getElementsByTagName('img');
+    var oPrev = document.getElementById('prev');
+    var oNext = document.getElementById('next');
+    var iNow = 0;
+    oPrev.onselectstart = function () {
+        return false;
+    };
+    oNext.onselectstart = function () {
+        return false;
+    };
+    oPrev.onclick = function () {
+        aImg[iNow].className = 'prevHide';
+        iNow--;
+        if(iNow<0){
+            iNow=aImg.length-1;
+        }
+        aImg[iNow].className = 'prevShow';
+    };
+    oNext.onclick = function () {
+        aImg[iNow].className = 'hide';
+        iNow++;
+        if(iNow>aImg.length-1){
+            iNow=0;
+        }
+        aImg[iNow].className = 'show';
+    }
+
+</script>
+</body>
+</html>
