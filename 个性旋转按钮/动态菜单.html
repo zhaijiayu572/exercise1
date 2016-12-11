@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态菜单</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #container{
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            position: relative;
+        }
+        #container div{
+            height: 42px;
+            width: 42px;
+            border-radius: 50px;
+            position: absolute;
+            -webkit-transition: all 1s ease;
+        }
+        #home{
+            width: 49px;
+            height: 49px;
+            border-radius: 50%;
+            background: url("img/home.png") center;
+            z-index: 1;
+        }
+        #close{
+            background: url("img/close.png");
+        }
+        #full{
+            background: url("img/full.png");
+        }
+        #open{
+            background: url("img/open.png");
+        }
+        #prev{
+            background: url("img/prev.png");
+        }
+        #refresh{
+            background: url("img/refresh.png");
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="home"></div>
+    <div id="close"></div>
+    <div id="full"></div>
+    <div id="open"></div>
+    <div id="prev"></div>
+    <div id="refresh"></div>
+</div>
+<script>
+    var oContainer = document.getElementById('container');
+    var aDiv = oContainer.getElementsByTagName('div');
+    var angle = 0;
+    var bFlag = true;
+    aDiv[0].onclick = function () {
+
+        if(bFlag){
+            aDiv[0].style.transform = "rotate(360deg)";
+            for(var i=1;i<aDiv.length;i++){
+
+                aDiv[i].style.transitionDelay = i*100+'ms';
+                var iX = 500*Math.cos(angle*(Math.PI/180));
+                var iY = 500*Math.sin(angle*(Math.PI/180));
+                aDiv[i].style.transform = "translate("+iX+"px,"+iY+"px) rotate(360deg)";
+                angle += 22.5;
+            }
+
+            angle = 0;
+            bFlag = !bFlag;
+        }else{
+            for( i=1;i<aDiv.length;i++){
+                aDiv[i].style.transitionDuration = '1s';
+                aDiv[i].style.transitionDelay = (aDiv.length-i)*100+'ms';
+                aDiv[0].style.transform = "rotate(0deg)";
+                aDiv[i].style.transform = "translate(0,0) rotate(0deg)";
+                angle += 22.5;
+            }
+            angle = 0;
+            bFlag = !bFlag;
+        }
+
+    };
+    var isAnimate = false;
+    for(var j=1;j<aDiv.length;j++){
+        aDiv[j].onclick = function () {
+            if(!isAnimate){
+                isAnimate = true;
+                var oDiv = this;
+                var currentTransform = this.style.transform;
+                this.style.transform = currentTransform+" scale(2)";
+                this.style.transitionDuration = '0.3s';
+                this.style.transitionDelay = 0+'s';
+                setTimeout(function () {
+                    oDiv.style.transform = currentTransform;
+                    isAnimate = false;
+                },300)
+            }
+        }
+    }
+</script>
+</body>
+</html>
