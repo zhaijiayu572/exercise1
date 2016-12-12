@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>折叠图片-review</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #container{
+            display: -webkit-box;
+            width: 800px;
+            height: 300px;
+            margin: 100px auto;
+
+        }
+        #container li{
+            width: 0;
+            height: 300px;
+            -webkit-box-flex: 1;
+            overflow: hidden;
+            -webkit-transition: all 1s ease;
+            position: relative;
+        }
+        #container li:hover{
+            width: 500px;
+        }
+        #container li div{
+            height: 20px;
+            width: 600px;
+            background: rgba(0,0,0,0.6);
+            color: #ffffff;
+            line-height: 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<ul id="container">
+    <li><img src="../images/1.jpg" alt=""><div>1</div></li>
+    <li><img src="../images/2.jpg" alt=""><div>2</div></li>
+    <li><img src="../images/3.jpg" alt=""><div>3</div></li>
+    <li><img src="../images/4.jpg" alt=""><div>4</div></li>
+    <li><img src="../images/6.jpg" alt=""><div>5</div></li>
+</ul>
+</body>
+</html>
