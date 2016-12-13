@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转木马-review</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #stage{
+            margin: 100px auto;
+            width: 1000px;
+            height: 500px;
+            -webkit-box-shadow: 10px 10px 10px #cccccc;
+            background: #cccccc;
+            -webkit-perspective: 800px;
+            -webkit-perspective-origin: center -10%;
+        }
+        #content{
+            height: 100px;
+            width: 128px;
+            position: relative;
+            left: 436px;
+            top:100px;
+            -webkit-transform-style: preserve-3d;
+            -webkit-transition: all 1s ease;
+        }
+        #content img{
+            -webkit-transition: all 1s ease;
+            height: 100px;
+            width: 128px;
+            position: absolute;
+
+        }
+    </style>
+</head>
+<body>
+<div id="stage">
+    <div id="content">
+        <img src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+        <img src="img/5.jpg" alt="">
+        <img src="img/6.jpg" alt="">
+        <img src="img/7.jpg" alt="">
+        <img src="img/8.jpg" alt="">
+        <img src="img/9.jpg" alt="">
+    </div>
+</div>
+<script>
+    var oContent = document.getElementById('content');
+    var aImg = oContent.getElementsByTagName('img');
+    var iWidth = aImg[0].offsetWidth;
+    var circle = 0;
+    var i = aImg.length-1;
+    var timer = setInterval(function () {
+        if(i==0){
+            clearInterval(timer);
+        }
+        aImg[i].style.transform = "rotateY("+-40*i+"deg) translateZ("+200+"px)";
+        i--;
+    },100);
+    oContent.onclick = function () {
+        circle++;
+        oContent.style.transform = "rotateY("+circle*40+"deg)";
+    }
+</script>
+</body>
+</html>
