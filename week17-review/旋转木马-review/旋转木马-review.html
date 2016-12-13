@@ -59,12 +59,12 @@
         if(i==0){
             clearInterval(timer);
         }
-        aImg[i].style.transform = "rotateY("+-40*i+"deg) translateZ("+200+"px)";
+        aImg[i].style.transform = "rotateY("+-40*i+"deg) translateZ("+((iWidth/2/Math.tan(20*Math.PI/180))+10)+"px)";
         i--;
     },100);
     oContent.onclick = function () {
         circle++;
-        oContent.style.transform = "rotateY("+circle*40+"deg)";
+        oContent.style.transform = "rotateY("+-circle*40+"deg)";
     }
 </script>
 </body>
