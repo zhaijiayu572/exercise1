@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转合并图片墙</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        #container{
+            width: 100%;
+            height: 100%;
+            background: url("img/bg.jpg");
+            position: relative;
+        }
+        #container .img{
+            left: -150px;
+            top:-150px;
+            width: 125px;
+            height: 125px;
+            border: 5px solid #ffffff;
+            position: absolute;
+            -webkit-transition: all 1.5s ease;
+        }
+        #container div span{
+            width: 125px;
+            height: 125px;
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            top:0;
+            -webkit-transition: opacity 1.5s ease;
+        }
+        #next,#prev{
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            top:50%;
+            margin-top: -25px;
+            display: none;
+        }
+        #prev{
+            background: url("img/prev.png") no-repeat center #ffffff;
+            border-radius: 0 8px 8px 0;
+            left: 0;
+        }
+        #next{
+            background: url("img/next.png") no-repeat center #ffffff;
+            border-radius: 8px 0 0 8px;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div id="next"></div>
+<div id="prev"></div>
+</body>
+<script>
+    var oContainer = document.getElementById('container');
+    var aDiv = oContainer.getElementsByTagName('div');
+    var oNext = document.getElementById('next');
+    var oPrev = document.getElementById('prev');
+    var number = 0;
+    for(var i=0;i<24;i++){
+        var oImg = new Image();
+        oImg.src = 'img/'+(i+1)+'.jpg';
+        oImg.onload = function () {
+            number++;
+            if(number==48){
+                loadSucess();
+            }
+        }
+    }
+    for(i=0;i<24;i++){
+        oImg = new Image();
+        oImg.src = 'img/thumbs/'+(i+1)+'.jpg';
+        oImg.onload = function () {
+            number++;
+            if(number==48){
+                loadSucess();
+            }
+        }
+    }
+    var index = 0;
+    var timer = null;
+    function loadSucess() {
+        var rowWidth = (oContainer.offsetWidth - 6*(125+10))/7;
+        var colHeight = (oContainer.offsetHeight - 4*(125+10))/5;
+        for(i=0;i<4;i++){
+            for(var j=0;j<6;j++){
+                index++;
+                var oDiv = document.createElement('div');
+                oDiv.className = 'img';
+                oDiv.style.background = "url('img/thumbs/"+index+".jpg')";
+                oDiv.onclick = fn;
+                oDiv.pos = {
+                    left:  j*(rowWidth+125+10)+rowWidth,
+                    top:   i*(colHeight+125+10)+colHeight
+                };
+                oDiv.innerHTML = '<span></span>';
+                oDiv.rowcol={
+                    i:i,
+                    j:j
+                };
+                oDiv.index = index;
+                oContainer.appendChild(oDiv);
+            }
+
+        }
+
+            timer = setInterval(function () {
+            index--;
+            aDiv[index].style.left = aDiv[index].pos.left+ 'px';
+            aDiv[index].style.top =  aDiv[index].pos.top+ 'px';
+            var rotateDeg = parseInt(Math.random()*40-20);
+            aDiv[index].style.transform = "rotate("+rotateDeg+"deg)";
+            if(index==0){
+                clearInterval(timer);
+            }
+        },100)
+
+    }
+    var bFlag =true;
+    function fn() {
+        if(bFlag){
+            clearInterval(timer);
+            var fnLeft = (oContainer.offsetWidth-750)/2;
+            var fnTop = (oContainer.offsetHeight-500)/2;
+            iNow = this.index-1;
+            oNext.style.display = "block";
+            oPrev.style.display = "block";
+            for(i = 0;i<aDiv.length;i++){
+                aDiv[i].style.left = (aDiv[i].rowcol.j * 125)+fnLeft+'px';
+                aDiv[i].style.top = (aDiv[i].rowcol.i*125)+fnTop + 'px';
+                aDiv[i].style.transform = "rotate(0deg)";
+                aDiv[i].style.border = "1px solid #fff";
+                var oSpan = aDiv[i].getElementsByTagName('span')[0];
+                oSpan.style.background = "url('img/"+(this.index)+".jpg') "+(-125*aDiv[i].rowcol.j)+"px "+(-aDiv[i].rowcol.i*125)+"px";
+                oSpan.style.opacity = 1;
+            }
+        }else{
+            oNext.style.display = "none";
+            oPrev.style.display = "none";
+            for(i=0;i<aDiv.length;i++){
+                aDiv[i].style.left = (aDiv[i].pos.left)+'px';
+                aDiv[i].style.top = (aDiv[i].pos.top) + 'px';
+                oSpan = aDiv[i].getElementsByTagName('span')[0];
+                oSpan.style.opacity = 0;
+                var rotateDeg = parseInt(Math.random()*40-20);
+                aDiv[i].style.transform = "rotate("+rotateDeg+"deg)";
+            }
+
+        }
+        bFlag = !bFlag;
+
+    }
+    var iNow = 0;
+    oPrev.onclick = oNext.onclick = function () {
+        if(this == oPrev){
+            iNow -- ;
+            if(iNow<0){
+                iNow = aDiv.length-1;
+
+            }
+            changeImg(iNow);
+        }else{
+            iNow++;
+            if(iNow>aDiv.length-1){
+                iNow=0;
+
+            }
+            changeImg(iNow);
+        }
+    };
+    function changeImg(index) {
+        var arr=[];
+        for(var i=0;i<aDiv.length;i++){
+            arr.push(i);
+        }
+        arr.sort(function () {
+           return (Math.random() - 0.5);
+        });
+
+        var a = 0;
+        var timer2 = setInterval(function () {
+
+            var idx = arr.pop();
+            var oSpan = aDiv[idx].getElementsByTagName('span')[0];
+            oSpan.style.background = "url('img/"+(index+1)+".jpg') "+(-125*aDiv[idx].rowcol.j)+"px "+(-aDiv[idx].rowcol.i*125)+"px";
+            oSpan.style.opacity = 1;
+            a++;
+            if(a==24){
+                clearInterval(timer2);
+            }
+        },30)
+    }
+</script>
+</html>
