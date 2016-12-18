@@ -73,7 +73,7 @@
         oImg.onload = function () {
             number++;
             if(number==48){
-                loadSucess();
+                loadSuccess();
             }
         }
     }
@@ -83,13 +83,13 @@
         oImg.onload = function () {
             number++;
             if(number==48){
-                loadSucess();
+                loadSuccess();
             }
         }
     }
     var index = 0;
     var timer = null;
-    function loadSucess() {
+    function loadSuccess() {
         var rowWidth = (oContainer.offsetWidth - 6*(125+10))/7;
         var colHeight = (oContainer.offsetHeight - 4*(125+10))/5;
         for(i=0;i<4;i++){
@@ -178,7 +178,11 @@
             changeImg(iNow);
         }
     };
+    var timer2 = null;
     function changeImg(index) {
+        if(timer2){
+            clearInterval(timer2);
+        }
         var arr=[];
         for(var i=0;i<aDiv.length;i++){
             arr.push(i);
@@ -188,7 +192,7 @@
         });
 
         var a = 0;
-        var timer2 = setInterval(function () {
+        timer2 = setInterval(function () {
 
             var idx = arr.pop();
             var oSpan = aDiv[idx].getElementsByTagName('span')[0];
