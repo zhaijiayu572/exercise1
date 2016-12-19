@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转合并图片墙-review</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        #container{
+            width: 100%;
+            height: 100%;
+            background: url("img/bg.jpg");
+            position: relative;
+        }
+        #container .img{
+            width: 125px;
+            height: 125px;
+            position: absolute;
+            border: 5px solid #ffffff;
+            left: -150px;
+            top: -150px;
+            -webkit-transition: all 1.5s ease;
+        }
+        #container div span{
+            width: 125px;
+            height: 125px;
+            position: absolute;
+            left: 0;
+            top:0;
+            opacity: 0;
+        }
+        #prev,#next{
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top:50%;
+            margin-top: -25px;
+            display: none;
+        }
+        #prev{
+            border-radius: 0 8px 8px 0;
+            background: url("img/prev.png") no-repeat center #ffffff;
+            left: 0;
+        }
+        #next{
+            border-radius: 8px 0 0 8px;
+            background: url("img/next.png") no-repeat center #ffffff;
+            right: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div id="prev"></div>
+<div id="next"></div>
+</body>
+<script>
+    var oContainer = document.getElementById('container');
+    var number = 0;
+
+    for(var i=0;i<24;i++){
+        var oImg = new Image();
+        oImg.src = "img/"+(i+1)+".jpg";
+        oImg.onload = function () {
+            number++;
+            if(number==48){
+                loadSuccess();
+            }
+
+        }
+    }
+    for(i=0;i<24;i++){
+        oImg = new Image();
+        oImg.src = "img/thumbs/"+(i+1)+".jpg";
+        oImg.onload = function () {
+            number++;
+            if(number==48){
+                loadSuccess();
+            }
+
+        }
+    }
+    var aDiv = oContainer.getElementsByTagName('div');
+    var index = 0;
+    var timer = null;
+    var iNow = 0;
+    console.log(aDiv);
+    function loadSuccess() {
+        var rowWidth = (oContainer.offsetWidth-6*(125+10))/7;
+        var colHeight = (oContainer.offsetHeight-4*(125+10))/5;
+        for(i=0;i<4;i++){
+            for(var j=0;j<6;j++){
+                var oDiv = document.createElement('div');
+                oDiv.className = "img";
+                oDiv.innerHTML = "<span></span>";
+                oDiv.style.background = "url('img/thumbs/"+(index+1)+".jpg') center";
+                console.log(oDiv.offsetWidth);
+                oDiv.pos={
+                    left:j*(125+rowWidth+10)+rowWidth,
+                    top:i*(125+colHeight+10)+colHeight
+                };
+                oDiv.colrow = {
+                    i:i,
+                    j:j
+                };
+                oDiv.index = index;
+                oDiv.onclick = fn;
+                oContainer.appendChild(oDiv);
+                index++;
+            }
+        }
+        timer = setInterval(function () {
+            index--;
+
+            aDiv[index].style.left = aDiv[index].pos.left+'px';
+            aDiv[index].style.top = aDiv[index].pos.top+'px';
+            var rotateDeg = Math.random()*40 - 20;
+            aDiv[index].style.transform = "rotate("+rotateDeg+"deg)";
+            if(index==0){
+                clearInterval(timer);
+            }
+        },100)
+
+    }
+    var bFlag = true;
+    function fn() {
+        if(bFlag){
+            oPrev.style.display = "block";
+            oNext.style.display = "block";
+            if(timer){
+                clearInterval(timer);
+            }
+            iNow = this.index;
+            var fnLeft = (oContainer.offsetWidth-6*125)/2;
+            var fnTop = (oContainer.offsetHeight-4*125)/2;
+            for(var i=0;i<aDiv.length;i++){
+                aDiv[i].style.border = "1px solid #fff";
+                aDiv[i].style.transform = "rotate(0deg)";
+                aDiv[i].style.left = aDiv[i].colrow.j*125+fnLeft+'px';
+                aDiv[i].style.top = aDiv[i].colrow.i*125 + fnTop+'px';
+                var oSpan = aDiv[i].getElementsByTagName('span')[0];
+                oSpan.style.background = "url('img/"+(this.index+1)+".jpg') "+-aDiv[i].colrow.j*125+"px "+-aDiv[i].colrow.i*125+"px";
+                oSpan.style.opacity = 1;
+
+            }
+        }else{
+            oPrev.style.display = "none";
+            oNext.style.display = "none";
+            for(i=0;i<aDiv.length;i++){
+                aDiv[i].style.left = aDiv[i].pos.left+'px';
+                aDiv[i].style.top = aDiv[i].pos.top+'px';
+                oSpan = aDiv[i].getElementsByTagName('span')[0];
+                oSpan.style.opacity = 0;
+                var rotateDeg = Math.random()*40 - 20;
+                aDiv[i].style.transform = "rotate("+rotateDeg+"deg)";
+            }
+        }
+        bFlag = !bFlag;
+
+    }
+    var oPrev = document.getElementById('prev');
+    var oNext = document.getElementById('next');
+    oPrev.onclick = oNext.onclick = function () {
+        if(this==oPrev){
+            iNow--;
+            if(iNow<0){
+                iNow=aDiv.length-1;
+            }
+            changeIMg(iNow);
+        }else{
+            iNow++;
+            if(iNow>aDiv.length-1){
+                iNow=0;
+            }
+            changeIMg(iNow);
+        }
+    };
+    var timer2 = null;
+    function changeIMg(index) {
+        if(timer2){
+            clearInterval(timer2);
+        }
+        var aIndex = [];
+        for(var i=0;i<aDiv.length;i++){
+            aIndex.push(i);
+        }
+        aIndex.sort(function () {
+            return Math.random()-0.5;
+        });
+        timer2 = setInterval(function () {
+            var idx = aIndex.pop();
+            var oSpan = aDiv[idx].getElementsByTagName('span')[0];
+            oSpan.style.background = "url('img/"+(index+1)+".jpg') "+-aDiv[idx].colrow.j*125+"px "+-aDiv[idx].colrow.i*125+"px";
+            if(aIndex.length==0){
+                clearInterval(timer2);
+            }
+        },30)
+    }
+</script>
+</html>
