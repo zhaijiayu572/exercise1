@@ -100,8 +100,8 @@
                 var oDiv = document.createElement('div');
                 oDiv.className = "img";
                 oDiv.innerHTML = "<span></span>";
+                console.log(oDiv.style.width);
                 oDiv.style.background = "url('img/thumbs/"+(index+1)+".jpg') center";
-                console.log(oDiv.offsetWidth);
                 oDiv.pos={
                     left:j*(125+rowWidth+10)+rowWidth,
                     top:i*(125+colHeight+10)+colHeight
