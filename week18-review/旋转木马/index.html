@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转木马-review</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #stage{
+            margin: 50px auto;
+            width: 1000px;
+            height: 500px;
+            -webkit-box-shadow: 10px 10px 10px #ccc;
+            background: #ccc;
+            position: relative;
+            -webkit-perspective: 800px;
+            -webkit-perspective-origin: center -10% ;
+        }
+        #content{
+            width: 150px;
+            height: 100px;
+            position: absolute;
+            left: 425px;
+            top:100px;
+            -webkit-transform-style: preserve-3d;
+            -webkit-transition: all 1s ease;
+        }
+        #content img{
+            width: 150px;
+            height: 100px;
+            position: absolute;
+            -webkit-transition: all 1s ease;
+        }
+    </style>
+
+</head>
+<body>
+<div id="stage">
+    <div id="content">
+        <img src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+        <img src="img/5.jpg" alt="">
+        <img src="img/6.jpg" alt="">
+        <img src="img/7.jpg" alt="">
+        <img src="img/8.jpg" alt="">
+        <img src="img/9.jpg" alt="">
+    </div>
+</div>
+<script>
+    var oContent = document.getElementById('content');
+    var aImg = oContent.getElementsByTagName('img');
+    var iDis = aImg[0].offsetWidth/2/Math.tan(20*Math.PI/180);
+    var i=aImg.length-1;
+    var timer = setInterval(function () {
+        aImg[i].style.transform = "rotateY("+40*i+"deg) translateZ("+(iDis+20)+"px)";
+        i--;
+        if(i==-1){
+            clearInterval(timer);
+        }
+    },100);
+    var number = 0;
+    oContent.onclick = function () {
+        number++;
+        this.style.transform = "rotateY("+-40*number+"deg)";
+    }
+</script>
+</body>
+</html>
