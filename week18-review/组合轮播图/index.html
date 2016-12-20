@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组合轮播图复习</title>
+    <style>
+        body{
+            background: #666666;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #container{
+            margin: 50px auto;
+            width: 400px;
+            height: 434px;
+            position: relative;
+        }
+        #content,#big-img,#big-img li,#big-img li img{
+            width: 400px;
+            height: 320px;
+            position: absolute;
+            left: 0;
+            top:0;
+            overflow: hidden;
+        }
+        #left,#right{
+            width: 200px;
+            height: 320px;
+            position: absolute;
+            top:0;
+            z-index: 9998;
+        }
+        #left{
+            left: 0;
+        }
+        #right{
+            right: 0;
+        }
+        #prev,#next{
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top:50%;
+            margin-top: -30px;
+            opacity: 0;
+            z-index: 9999;
+        }
+        #prev{
+            background: url("img/btn.gif");
+            left: 0;
+        }
+        #next{
+            background: url("img/btn.gif") bottom;
+            right: 0;
+        }
+        #text{
+            width: 400px;
+            height: 20px;
+            line-height: 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.5);
+            color: purple;
+            z-index: 9999;
+        }
+        #left-text{
+            position: absolute;
+            left: 0;
+        }
+        #right-text{
+            position: absolute;
+            right: 0;
+
+        }
+        #slide{
+            width: 400px;
+            height: 114px;
+            position: absolute;
+            bottom: 0;
+            background: #cccccc;
+            overflow: hidden;
+        }
+        #small-img{
+            width: 780px;
+            position: absolute;
+        }
+        #small-img li{
+            opacity: 0.5;
+            height: 94px;
+            width: 120px;
+            margin: 10px 0 10px 10px;
+            float: left;
+        }
+        #small-img .selected{
+            opacity: 1;
+
+        }
+        #small-img img{
+            height: 94px;
+            width: 120px;
+
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <ul id="big-img">
+            <li><img src="img/1.jpg" alt="" title="仰望天空"></li>
+            <li><img src="img/2.jpg" alt="" title="古典家具"></li>
+            <li><img src="img/3.jpg" alt="" title="运动潮男"></li>
+            <li><img src="img/4.jpg" alt="" title="动感汽车"></li>
+            <li><img src="img/5.jpg" alt="" title="现代美女"></li>
+            <li><img src="img/6.jpg" alt="" title="五光十色"></li>
+        </ul>
+        <div id="left">
+            <div id="prev"></div>
+        </div>
+        <div id="right">
+            <div id="next"></div>
+        </div>
+        <div id="text">
+            <div id="left-text">仰望天空</div>
+            <div id="right-text"><span id="number">1</span>/6</div>
+        </div>
+    </div>
+    <div id="slide">
+        <ul id="small-img">
+            <li class="selected"><img src="img/1.jpg" alt=""></li>
+            <li><img src="img/2.jpg" alt=""></li>
+            <li><img src="img/3.jpg" alt=""></li>
+            <li><img src="img/4.jpg" alt=""></li>
+            <li><img src="img/5.jpg" alt=""></li>
+            <li><img src="img/6.jpg" alt=""></li>
+        </ul>
+    </div>
+</div>
+<script src="jslib.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>
