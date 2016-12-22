@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个性旋转按钮-review</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            width: 45px;
+            height: 45px;
+            position: relative;
+        }
+        #container div{
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            position: absolute;
+            -webkit-transition: all 1s ease;
+        }
+        #home{
+            width: 45px;
+            height: 45px;
+            background: url("img/home.png") center;
+            z-index: 1;
+        }
+        #close{
+            background: url("img/close.png");
+        }
+        #full{
+            background: url("img/full.png");
+        }
+        #open{
+            background: url("img/open.png");
+        }
+        #prev{
+            background: url("img/prev.png");
+        }
+        #refresh{
+            background: url("img/refresh.png");
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="home"></div>
+    <div id="close"></div>
+    <div id="full"></div>
+    <div id="open"></div>
+    <div id="prev"></div>
+    <div id="refresh"></div>
+</div>
+<script>
+    var oContainer =document.getElementById('container');
+    var aDiv = oContainer.getElementsByTagName('div');
+    var isClick = false; //false代表还未点开
+    aDiv[0].onclick = function () {
+        if(!isClick){
+            this.style.transform = "rotate(360deg)";
+            for(var i=1;i<aDiv.length;i++){
+                aDiv[i].style.transitionDuration = 1+'s';
+                var iX = 150*Math.cos(22.5*(i-1)*Math.PI/180);
+                var iY = 150*Math.sin(22.5*(i-1)*Math.PI/180);
+                aDiv[i].style.transitionDelay = i*100 + 'ms';
+                aDiv[i].style.transform = "translate("+iX+"px,"+iY+"px) rotate(360deg)";
+                aDiv[i].onclick = click;
+            }
+        }else{
+            this.style.transform = "rotate(0deg)";
+            for (i=1;i<aDiv.length;i++){
+                aDiv[i].style.transitionDuration = 1+'s';
+                aDiv[i].style.transitionDelay = (aDiv.length-i)*100+'ms';
+                aDiv[i].style.transform = "translate(0px,0px) rotate(0deg)";
+            }
+        }
+        isClick = !isClick;
+    };
+    var isAnimate = false;
+    function click() {
+
+        if(!isAnimate){
+            isAnimate = !isAnimate;
+            var nowTransform = this.style.transform;
+            this.style.transitionDelay = 0+'ms';
+            this.style.transitionDuration = 0.3+'s';
+            this.style.transform = nowTransform+"scale(2)";
+            var that = this;
+            var timer = setTimeout(function () {
+                that.style.transform = nowTransform+"scale(1)";
+                isAnimate = !isAnimate;
+            },300)
+        }
+
+    }
+</script>
+</body>
+</html>
