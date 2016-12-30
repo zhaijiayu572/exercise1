@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转轮播图-review</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            width: 680px;
+            height: 344px;
+            position: relative;
+            margin: 50px auto;
+            -webkit-perspective: 800px;
+        }
+        #content img{
+            width: 680px;
+            height: 344px;
+            position: absolute;
+            opacity: 0;
+            -webkit-transform-origin: bottom;
+            -webkit-transform: rotateX(180deg);
+        }
+        #content .selected{
+            animation: show 1s ease forwards;
+        }
+        @keyframes show {
+            0%{}
+            50%{
+                transform: rotateX(-8deg);
+            }
+            60%{
+                transform: rotateX(6deg);
+            }
+            70%{
+                transform: rotateX(-4deg);
+            }
+            80%{
+                transform: rotateX(2deg);
+            }
+            90%{
+                transform: rotateX(-1deg);
+            }
+            100%{
+                transform: rotateX(0deg);
+                opacity: 1;
+            }
+        }
+        #content .hide{
+            animation: hide 1s ease forwards;
+        }
+        @keyframes hide {
+            from{
+                transform: rotateX(0deg);
+                opacity: 1;
+            }
+            to{
+                transform: rotateX(-180deg);
+                opacity: 0;
+            }
+        }
+        #left{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            position: absolute;
+            left: -120px;
+            top:172px;
+            margin-top: -30px;
+            background: #cccccc;
+            text-align: center;
+            line-height: 60px;
+            font-size: 20px;
+        }
+        #right{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            position: absolute;
+            right: -120px;
+            top:172px;
+            margin-top: -30px;
+            background: #cccccc;
+            text-align: center;
+            line-height: 60px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <img src="../img/1.jpg" alt="" class="selected">
+        <img src="../img/2.jpg" alt="">
+        <img src="../img/3.jpg" alt="">
+        <img src="../img/4.jpg" alt="">
+    </div>
+    <div id="left">
+        &lt;
+    </div>
+    <div id="right">&gt;</div>
+</div>
+<script>
+    var oContainer = document.getElementById('container');
+    var oLeft = document.getElementById('left');
+    var oRight = document.getElementById('right');
+    var aImg = oContainer.getElementsByTagName('img');
+    var iNow = 0;
+    oLeft.onclick = oRight.onclick = function () {
+        if(this == oLeft){
+            hideImg(iNow);
+            iNow --;
+            if(iNow<0){
+                iNow = aImg.length-1;
+            }
+            showImg(iNow)
+        }else{
+            hideImg(iNow);
+            iNow++;
+            if(iNow>aImg.length-1){
+                iNow = 0;
+            }
+            showImg(iNow);
+        }
+    };
+    function showImg(index) {
+        aImg[index].className = "selected";
+    }
+    function hideImg(index) {
+        aImg[index].className = "hide";
+    }
+</script>
+</body>
+</html>
