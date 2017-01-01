@@ -2,20 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>test</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #container{
+            width: 500px;
+            height: 300px;
+            display: -webkit-box;
+        }
+        #container li:nth-child(1){
+            width: 50px;
+            -webkit-box-flex: 1;
+            height: 300px;
+            overflow: hidden;
+        }
+        #container li:nth-child(2){
+            width: 50px;
+            -webkit-box-flex: 2;
+            height: 300px;
+            overflow: hidden;
+        }
+        #container li:nth-child(3){
+            width: 50px;
+            -webkit-box-flex: 3;
+            height: 300px;
+            overflow: hidden;
+        }
+        #container li:nth-child(4){
+            width: 50px;
+            -webkit-box-flex: 1;
+            height: 300px;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-<script>
-    var a,b;
-    (function(){
-        console.log(a);
-        console.log(b);
-        var a=b=3;
-        console.log(a);
-        console.log(b);
-    })();
-    console.log(a);
-    console.log(b);
-</script>
+<ul id="container">
+    <li><img src="images/1.jpg" alt=""></li>
+    <li><img src="images/2.jpg" alt=""></li>
+    <li><img src="images/3.jpg" alt=""></li>
+    <li><img src="images/4.jpg" alt=""></li>
+</ul>
 </body>
 </html>
